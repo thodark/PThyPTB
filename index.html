@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Món quà nhỏ của anh</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 body {
   font-family: 'Inter', Arial, sans-serif;
@@ -117,8 +117,10 @@ video {
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition: filter 0.3s ease; /* Chuyển động filter mượt mà */
 }
 
+/* Canvas dùng để chụp ảnh, sẽ bị ẩn đi */
 canvas {
   display: none;
 }
@@ -324,9 +326,9 @@ button:disabled {
   </div>
   <div id="filterControls">
     <button class="filter-btn" data-filter="none">Bình thường</button>
-    <button class="filter-btn" data-filter="vintage">Cổ điển</button>
-    <button class="filter-btn" data-filter="warm">Ấm áp</button>
-    <button class="filter-btn" data-filter="cool">Lạnh</button>
+    <button class="filter-btn" data-filter="tokyo">Tokyo</button>
+    <button class="filter-btn" data-filter="seoul">Seoul</button>
+    <button class="filter-btn" data-filter="paris">Paris</button>
   </div>
   <div id="controls">
     <button id="startButton">▶ Bắt đầu</button>
@@ -343,13 +345,27 @@ button:disabled {
 </div>
 
 <div id="stickerAssets" style="display: none;">
-  <img id="sticker-bear" src="data:image/png;base64,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">
-  <img id="sticker-cat" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADvElEQVR4nO3dyXqiMBCG4SABFaUUxAVB8fz/n7pSA4kQO9POnM/7fMkkZDKZTGo9DwAAAAAAAAAAAAAAAADAr+jo6PzUdd0/rtfrHx6Pxx/r9fp7Xdd/SJKEI5HIv4lEwh/q9fqf6XR6z/P8W57nP7Is+8+y7N/Pzs5+m5+f/13WdX9NKaX0P0sprq+v7+/vb2+llH+GEEII8zz/WZblz1LKv6SUFEV5nldK6X+WUEqllFJKf4wxSintn6WUWZY/Sxnl+0qpLMvfKIrgOF5VVdV1vSAI/jBN8w8hhM/zvM/z/Ndsttu8tLR0x+Pxm7qu/1mW5e/xeHwaDoc/1Ov173mev0spRVE0Njb28vJyWZZlWRZF8ff7/S9lWf5tfn7+qdVq/ZBl2b+UUp7nlVIqpeQ4zmQyGY/HT5vN5uPj4yRJ8jyv6/rW1taWlpaura1tf39/c3OzXC6fmpqaX15ePp1O/ywMw8dxHJfLpVRKaZriOG7bthBCpZQsy/Pz81QqlWKxODc3t7S0dHp6uqoqqVSqUqlEQlFKSZIYY4RQuVxuNptTqcRxfDweTyaTSqmSJEmStNlsXlhY2NzcXFtb+9bW1tbW1nQ6/ZBlWYZhyuWyLMtCCHEcZ1lmWRbDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzD+DeO4xNPhuGkpmndbrcvLS3Nzc11Op3dbncsFkMQhCTJZrO52WwODw8fHx8fHx8fHx9/fHycpmmSJEnT9Pr6+vLy8urq6urq6urq6tTU1Nra2v7+/v7+/vLy8vr6+vj4eDqdPjw8zGazWZZFCDGbzdZ1XVmWKYoSicQsy4QQWZYdDodCCCHEDMOEEI1GQwgxTRNGyPO8KAohxBjjmubq6mpHR0dd15vN5lAoFJfLpZQihKSUrutpmtI0pdPppFIpJpNZXl6urq4ODQ0tLS2tqqpqbGxsbW2tVqvt7e2tbW1tbW1NTU1FRUWNjY1KpVJKSZIkRVE0TRNCRFEUjuPwPA8hZFlW1/Xb29uvXr26ublZrVZrmubx8bFarb7y8vLw8LCiKAkhxhgIITHGyWQyHA6zLGuapiiKUqlUJBJpNJqqqmpwcLCiKDzP6+vrR0ZGhoeH6+vrsyz7+/t7NBpNTU0NDQ0NCAgQiURisdjg4ODw8PDKysrV1dXW1tarV69ubW3tdDqNRqNcLkeSJEIIIYTxeFyv1wcGBoZCoXK5HACEEGI8Hq+urkIIYRgmSZKWlpaGhoZ2d3dra2uDwWAcxyGEEEJYlmVZFgBCCCEhhBCllM/neZ6XUvqfOI7r9frOzs729vYDAwMHBweHh4dHRkZWV1deXl5TU1NRURFHUZRSNE2TyWSz2ZIkCQAAAAAAAAAAAAAAAAAAAAAAAAAAAPwz/wG5m36d1CRyAQAAAABJRU5ErkJggg==">
-  <img id="sticker-frog" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAACvklEQVR4nO3d63KbMBRGYSBIVFAExUUUi+L//7oOlGAn9pDs9q3l4/M0w0zIZLLpNR4AAAAAAAAAAAAAAACAe+ro6EjdNf3S6/WPj8fj94/H4+/1dV2EEFZVVbIsQwiTySQEQiKReDwez/O+KIqmaUqShMPhMpvNhBBBEARBkCRJwzAIISiKgiAIvu9FUYwxvu+TJGma5vF4oiiKoqgQwqZpvu9jGOZ53nUdpZTzPEIIHMfpOE4pFUUhhCiKQghFUbIsY4xFUUhSlFKEEEKImqYoimIcx7IsSZIQAlmWlFKEEFJKeZ5TSgkhhBCUUgBSSpZlCSEhhGEYhBAURSHERFG03W7X6/VyuRwAgM/ncRyXy+VyuVwul8Fg0Ol0cByXy+U8z7vd7nA4bDYbYRimUqmUUmVZ1ul0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6nU+l0WlXVcZxCoRBCjDGllNfrtVqtqqq6LMuSJFmW1XW9XC5jDDDGwzAMw3Q6nUqlUqlUoVAohBDGGI7jdru9Wq1arVZYlrVarcYYsiz7vo8Qvu8hhEajQSGEEFJKuVwulUrpdDqdTsfzPMMwUsoYQ8uyCCGaZhiGSZKEEEIIIUIIIUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEML/Tf4BvL1sU2rYkYkAAAAASUVORK5CYII=">
-  <img id="sticker-cloud" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADhklEQVR4nO3d4XqiMBQGYCwQFRIVF0Wx/v9/3VADiZ1pZ87n/b5nEplMJrWehwAAAAAAAAAAAAAAAMDPSkdH56eSJL/xer3x+Pg4/nh8fPyk1+vvSqXyC5IkLMvSNE0I8fPzc0qpKIrVarVarbquE0JBEFmWdU3TdDqdTqcjhHAch5SiKIqiyHEcQohpmizLsixjDBzHruvK5XLz8/Msy7IsS5bldrudIAiKoiiKIgDAcZwiigAApZQBAFmWKYXValVVVZIkhBCllCiKpmmEEADAOI4AQAgBADAMAADGGAAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAQGtraxtCCCEsy7quh8NhvV6n0+lqtVqtVpIkRVGmaZqmKY7jNE2SJDAMAwDquuM4TqlUKpVK4XBYlWWdThdCCCGEEEKlUnmeV2q1Xq+Xz+eTySQIgiRJsq5rNpsjhHmeJ0lCCCEIAkIIpmkyDSGEEMdxpRQhhGEYiqKEEOI4juN4Pp9TSjDGGEbRdd1yuRwiqVQq4XBYrVZVVXEcJUmSJEmSJAAAyWQyx3GdTifLsqZpSqmSJClJEgCllCzLkiQhhBBCiFJKURRBEBiGKYoSicSkUqlyuRwAQJZllmVBEHieV1XVarVCCLFYLMdxOp2OYRjHcVmWIAhhGEIIpmmqquq6zmaz2Ww2nU4nSQIAMIxBpVLBYDBcLleWZVmWUso0TeM4FEVBEERVVZIkNE07ODg4Ozs7Ozt7eHh4fHz88fExGAxmZmZWV1dXV1dXV1dTU1NjY2NTU1NjY2OTk5NHjx4dHR0dHR398/Pz8fExGAzW1tZWV1fHx8eHh4fT09NrampmZmYODg4ODg4mkymKouM4pmmEEKWU6XQaDocDAwNDQ0O7u7vb29sLhcJyuVwul9vt9uHh4bNnzx4+fPj8+fMPHz7c3d1durq6urp6cnJydHT07NmzgYGBVCoVEUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEeF/8AzM7cNQy+y/eAAAAAElFTkSuQmCC">
-  <img id="sticker-lollipop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADNElEQVR4nO3d4XKiMBQGYCwQFRIVF0Wx/v9/3VADiZ1pZ87n/b5nEplMJrWehwAAAAAAAAAAAAAAAMDPSkdH56eSJL/xer3x+Pg4/nh8fPyk1+vvSqXyC5IkLMvSNE0I8fPzc0qpKIrVarVarbquE0JBEFmWdU3TdDqdTqcjhHAch5SiKIqiyHEcQohpmizLsixjDBzHruvK5XLz8/Msy7IsS5bldrudIAiKoiiKIgDAcZwiigAApZQBAFmWKYXValVVVZIkhBCllCiKpmmEEADAOI4AQAgBADAMAADGGAAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAQGtraxtCCCEsy7quh8NhvV6n0+lqtVqtVpIkRVGmaZqmKY7jNE2SJDAMAwDquuM4TqlUKpVK4XBYlWWdThdCCCGEEEKlUnmeV2q1Xq+Xz+eTySQIgiRJsq5rNpsjhHmeJ0lCCCEIAkIIpmkyDSGEEMdxpRQhhGEYiqKEEOI4juN4Pp9TSjDGGEbRdd1yuRwiqVQq4XBYrVZVVXEcJUmSJEmSJAAAyWQyx3GdTifLsqZpSqmSJClJEgCllCzLkiQhhBBCiFJKURRBEBiGKYoSicSkUqlyuRwAQJZllmVBEHieV1XVarVCCLFYLMdxOp2OYRjHcVmWIAhhGEIIpmmqquq6zmaz2Ww2nU4nSQIAMIxBpVLBYDBcLleWZVmWUso0TeM4FEVBEERVVZIkNE07ODg4Ozs7Ozt7eHh4fHz88fExGAxmZmZWV1dXV1dXV1dTU1NjY2NTU1NjY2OTk5NHjx4dHR0dHR398/Pz8fExGAzW1tZWV1fHx8eHh4fT09NrampmZmYODg4ODg4mkymKouM4pmmEEKWU6XQaDocDAwNDQ0O7u7vb29sLhcJyuVwul9vt9uHh4bNnzx4+fPj8+fMPHz7c3d1durq6urp6cnJydHT07NmzgYGBVCoVEUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEeF/8AzM7cNQy+y/eAAAAAElFTkSuQmCC">
-  <img id="sticker-cupcake" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADVElEQVR4nO3d23LiMBRGYSBCVFAExUUUi+L//+gGlGAn9pDs9q3l4/M0w0zIZLLpNR4AAAAAAAAAAAAAAACAe+ro6EjdNf3S6/WPj8fj94/H4+/1dV2EEFZVVbIsQwiTySQEQiKReDwez/O+KIqmaUqShMPhMpvNhBBBEARBkCRJwzAIISiKgiAIvu9FUYwxvu+TJGma5vF4oiiKoqgQwqZpvu9jGOZ53nUdpZTzPEIIHMfpOE4pFUUhhCiKQghFUbIsY4xFUUhSlFKEEEKImqYoimIcx7IsSZIQAlmWlFKEEFJKeZ5TSgkhhBCUUgBSSpZlCSEhhGEYhBAURSHERFG03W7X6/VyuRwAgM/ncRyXy+VyuVwul8Fg0Ol0cByXy+U8z7vd7nA4bDYbYRimUqmUUmVZ1ul0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6nU+l0WlXVcZxCoRBCjDGllNfrtVqtqqq6LMuSJFmW1XW9XC5jDDDGwzAMw3Q6nUqlUqlUoVAohBDGGI7jdru9Wq1arVZYlrVarcYYsiz7vo8Qvu8hhEajQSGEEFJKuVwulUrpdDqdTsfzPMMwUsoYQ8uyCCGaZhiGSZKEEEIIIUIIIUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEML/Tf4BvL1sU2rYkYkAAAAASUVORK5CYII=">
-  <img id="sticker-gift" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADTUlEQVR4nO3dyXKiMBQGYCwQFRIVF0Wx/v9/3VADiZ1pZ87n/b5nEplMJrWehwAAAAAAAAAAAAAAAMDPSkdH56eSJL/xer3x+Pg4/nh8fPyk1+vvSqXyC5IkLMvSNE0I8fPzc0qpKIrVarVarbquE0JBEFmWdU3TdDqdTqcjhHAch5SiKIqiyHEcQohpmizLsixjDBzHruvK5XLz8/Msy7IsS5bldrudIAiKoiiKIgDAcZwiigAApZQBAFmWKYXValVVVZIkhBCllCiKpmmEEADAOI4AQAgBADAMAADGGAAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAQGtraxtCCCEsy7quh8NhvV6n0+lqtVqtVpIkRVGmaZqmKY7jNE2SJDAMAwDquuM4TqlUKpVK4XBYlWWdThdCCCGEEEKlUnmeV2q1Xq+Xz+eTySQIgiRJsq5rNpsjhHmeJ0lCCCEIAkIIpmkyDSGEEMdxpRQhhGEYiqKEEOI4juN4Pp9TSjDGGEbRdd1yuRwiqVQq4XBYrVZVVXEcJUmSJEmSJAAAyWQyx3GdTifLsqZpSqmSJClJEgCllCzLkiQhhBBCiFJKURRBEBiGKYoSicSkUqlyuRwAQJZllmVBEHieV1XVarVCCLFYLMdxOp2OYRjHcVmWIAhhGEIIpmmqquq6zmaz2Ww2nU4nSQIAMIxBpVLBYDBcLleWZVmWUso0TeM4FEVBEERVVZIkNE07ODg4Ozs7Ozt7eHh4fHz88fExGAxmZmZWV1dXV1dXV1dTU1NjY2NTU1NjY2OTk5NHjx4dHR0dHR398/Pz8fExGAzW1tZWV1fHx8eHh4fT09NrampmZmYODg4ODg4mkymKouM4pmmEEKWU6XQaDocDAwNDQ0O7u7vb29sLhcJyuVwul9vt9uHh4bNnzx4+fPj8+fMPHz7c3d1durq6urp6cnJydHT07NmzgYGBVCoVEUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEeF/8AzM7cNQy+y/eAAAAAElFTkSuQmCC">
+  <svg id="svg-bear" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C9.79086 2 8 3.79086 8 6C8 7.05436 8.35821 8.01972 8.97103 8.78494C6.39162 9.53034 4.5 11.8906 4.5 14.667C4.5 17.5191 6.38885 19.8824 9.02029 20.612C9.52295 22.0945 10.6698 23 12 23C13.3302 23 14.477 22.0945 14.9797 20.612C17.6111 19.8824 19.5 17.5191 19.5 14.667C19.5 11.8906 17.6084 9.53034 15.029 8.78494C15.6418 8.01972 16 7.05436 16 6C16 3.79086 14.2091 2 12 2ZM12 4C13.1046 4 14 4.89543 14 6C14 7.10457 13.1046 8 12 8C10.8954 8 10 7.10457 10 6C10 4.89543 10.8954 4 12 4ZM10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14H14C14.5523 14 15 13.5523 15 13C15 12.4477 14.5523 12 14 12H10Z" fill="#ffb6c1"/>
+  </svg>
+  <svg id="svg-cat" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2ZM7.5 7.5C7.5 6.67157 8.17157 6 9 6C9.82843 6 10.5 6.67157 10.5 7.5C10.5 8.32843 9.82843 9 9 9C8.17157 9 7.5 8.32843 7.5 7.5ZM13.5 7.5C13.5 6.67157 14.1716 6 15 6C15.8284 6 16.5 6.67157 16.5 7.5C16.5 8.32843 15.8284 9 15 9C14.1716 9 13.5 8.32843 13.5 7.5ZM12 11.5C10.6193 11.5 9.5 12.6193 9.5 14C9.5 15.3807 10.6193 16.5 12 16.5C13.3807 16.5 14.5 15.3807 14.5 14C14.5 12.6193 13.3807 11.5 12 11.5ZM3 9C3 8.44772 3.44772 8 4 8H6C6.55228 8 7 8.44772 7 9C7 9.55228 6.55228 10 6 10H4C3.44772 10 3 9.55228 3 9ZM18 9C18 8.44772 18.4477 8 19 8H21C21.5523 8 22 8.44772 22 9C22 9.55228 21.5523 10 21 10H19C18.4477 10 18 9.55228 18 9Z" fill="#ffb6c1"/>
+  </svg>
+  <svg id="svg-cloud" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C9.79086 2 8 3.79086 8 6C8 7.05436 8.35821 8.01972 8.97103 8.78494C6.39162 9.53034 4.5 11.8906 4.5 14.667C4.5 17.5191 6.38885 19.8824 9.02029 20.612C9.52295 22.0945 10.6698 23 12 23C13.3302 23 14.477 22.0945 14.9797 20.612C17.6111 19.8824 19.5 17.5191 19.5 14.667C19.5 11.8906 17.6084 9.53034 15.029 8.78494C15.6418 8.01972 16 7.05436 16 6C16 3.79086 14.2091 2 12 2ZM12 4C13.1046 4 14 4.89543 14 6C14 7.10457 13.1046 8 12 8C10.8954 8 10 7.10457 10 6C10 4.89543 10.8954 4 12 4ZM10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14H14C14.5523 14 15 13.5523 15 13C15 12.4477 14.5523 12 14 12H10Z" fill="#ffb6c1"/>
+  </svg>
+  <svg id="svg-lollipop" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C7.03194 2 3 6.03194 3 11C3 15.9681 7.03194 20 12 20C16.9681 20 21 15.9681 21 11C21 6.03194 16.9681 2 12 2ZM12 4C15.866 4 19 7.13401 19 11C19 14.866 15.866 18 12 18C8.13401 18 5 14.866 5 11C5 7.13401 8.13401 4 12 4ZM12 6C11.4477 6 11 6.44772 11 7C11 7.55228 11.4477 8 12 8C12.5523 8 13 7.55228 13 7C13 6.44772 12.5523 6 12 6ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z" fill="#ffb6c1"/>
+  </svg>
+  <svg id="svg-cupcake" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C9.79086 2 8 3.79086 8 6C8 7.05436 8.35821 8.01972 8.97103 8.78494C6.39162 9.53034 4.5 11.8906 4.5 14.667C4.5 17.5191 6.38885 19.8824 9.02029 20.612C9.52295 22.0945 10.6698 23 12 23C13.3302 23 14.477 22.0945 14.9797 20.612C17.6111 19.8824 19.5 17.5191 19.5 14.667C19.5 11.8906 17.6084 9.53034 15.029 8.78494C15.6418 8.01972 16 7.05436 16 6C16 3.79086 14.2091 2 12 2ZM12 4C13.1046 4 14 4.89543 14 6C14 7.10457 13.1046 8 12 8C10.8954 8 10 7.10457 10 6C10 4.89543 10.8954 4 12 4ZM10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14H14C14.5523 14 15 13.5523 15 13C15 12.4477 14.5523 12 14 12H10Z" fill="#ffb6c1"/>
+  </svg>
+  <svg id="svg-gift" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2ZM7.5 7.5C7.5 6.67157 8.17157 6 9 6C9.82843 6 10.5 6.67157 10.5 7.5C10.5 8.32843 9.82843 9 9 9C8.17157 9 7.5 8.32843 7.5 7.5ZM13.5 7.5C13.5 6.67157 14.1716 6 15 6C15.8284 6 16.5 6.67157 16.5 7.5C16.5 8.32843 15.8284 9 15 9C14.1716 9 13.5 8.32843 13.5 7.5ZM12 11.5C10.6193 11.5 9.5 12.6193 9.5 14C9.5 15.3807 10.6193 16.5 12 16.5C13.3807 16.5 14.5 15.3807 14.5 14C14.5 12.6193 13.3807 11.5 12 11.5ZM3 9C3 8.44772 3.44772 8 4 8H6C6.55228 8 7 8.44772 7 9C7 9.55228 6.55228 10 6 10H4C3.44772 10 3 9.55228 3 9ZM18 9C18 8.44772 18.4477 8 19 8H21C21.5523 8 22 8.44772 22 9C22 9.55228 21.5523 10 21 10H19C18.4477 10 18 9.55228 18 9Z" fill="#ffb6c1"/>
+  </svg>
+  <svg id="svg-frog" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C9.79086 2 8 3.79086 8 6C8 7.05436 8.35821 8.01972 8.97103 8.78494C6.39162 9.53034 4.5 11.8906 4.5 14.667C4.5 17.5191 6.38885 19.8824 9.02029 20.612C9.52295 22.0945 10.6698 23 12 23C13.3302 23 14.477 22.0945 14.9797 20.612C17.6111 19.8824 19.5 17.5191 19.5 14.667C19.5 11.8906 17.6084 9.53034 15.029 8.78494C15.6418 8.01972 16 7.05436 16 6C16 3.79086 14.2091 2 12 2ZM12 4C13.1046 4 14 4.89543 14 6C14 7.10457 13.1046 8 12 8C10.8954 8 10 7.10457 10 6C10 4.89543 10.8954 4 12 4ZM10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14H14C14.5523 14 15 13.5523 15 13C15 12.4477 14.5523 12 14 12H10Z" fill="#ffb6c1"/>
+  </svg>
 </div>
 
 <script>
@@ -361,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let timeLeft = TIME_LIMIT;
   let photoCount = 0;
   let isSessionActive = false;
-  let currentFilter = 'none';
+  let currentFilterStyle = 'none'; // Sửa: Dùng trực tiếp style
   const loginContainer = document.getElementById('loginContainer');
   const photoboothApp = document.getElementById('photoboothApp');
   const loginButton = document.getElementById('loginButton');
@@ -382,8 +398,38 @@ document.addEventListener('DOMContentLoaded', function() {
   const selectionMessage = document.getElementById('selectionMessage');
   const filterButtons = document.querySelectorAll('#filterControls .filter-btn');
 
-  // KHÔNG CẦN loadStickers() nữa
+  // Hàm để chuyển SVG thành Image cho Canvas
+  async function svgToImage(svgElement, width, height) {
+      return new Promise((resolve, reject) => {
+          const svgData = new XMLSerializer().serializeToString(svgElement);
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = (e) => reject(new Error('Lỗi chuyển SVG thành ảnh: ' + e));
+          img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+      });
+  }
+
+  // Tải tất cả các sticker SVG thành Image một lần
+  const stickerImages = {};
+  async function loadSvgStickers() {
+      const stickerIds = ['svg-bear', 'svg-cat', 'svg-cloud', 'svg-lollipop', 'svg-cupcake', 'svg-gift', 'svg-frog'];
+      for (const id of stickerIds) {
+          const svgElement = document.getElementById(id);
+          if (svgElement) {
+              try {
+                  // Giả định kích thước mặc định cho SVG nếu không được truyền vào
+                  const img = await svgToImage(svgElement, 100, 100); 
+                  stickerImages[id] = img;
+              } catch (e) {
+                  console.error(`Không thể tải sticker ${id}:`, e);
+              }
+          }
+      }
+  }
   
+  // Gọi hàm này khi khởi tạo ứng dụng
+  loadSvgStickers();
+
   loginButton.addEventListener('click', function() {
     const username = usernameInput.value;
     const password = passwordInput.value;
@@ -392,7 +438,6 @@ document.addEventListener('DOMContentLoaded', function() {
       photoboothApp.style.display = 'flex';
       photoboothApp.classList.remove('hidden');
       
-      // Chạy camera trực tiếp
       startCamera();
       resetUI();
       
@@ -436,24 +481,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // === HÀM FILTER MỚI (DÙNG STYLE TRỰC TIẾP) ===
   function applyFilter(filter) {
     let filterValue = 'none';
     switch (filter) {
-      case 'vintage':
-        filterValue = 'sepia(80%) contrast(110%) saturate(90%) brightness(95%)';
+      case 'tokyo':
+        filterValue = 'contrast(1.1) brightness(1.1) saturate(0)'; // Tông màu lạnh, ít màu
         break;
-      case 'warm':
-        filterValue = 'sepia(40%) saturate(150%) brightness(105%) hue-rotate(-10deg)';
+      case 'seoul':
+        filterValue = 'saturate(1.3) contrast(1.1) sepia(0.2)'; // Tông màu ấm, tươi sáng
         break;
-      case 'cool':
-        filterValue = 'grayscale(20%) contrast(110%) brightness(105%) hue-rotate(10deg)';
+      case 'paris':
+        filterValue = 'contrast(0.9) brightness(1.2) saturate(0.8) hue-rotate(-10deg)'; // Tông màu trầm, cổ điển
         break;
       case 'none':
       default:
         filterValue = 'none';
     }
     video.style.filter = filterValue;
-    currentFilter = filterValue;
+    currentFilterStyle = filterValue;
   }
   
   function resetUI() {
@@ -466,8 +512,11 @@ document.addEventListener('DOMContentLoaded', function() {
     photoCountDisplay.textContent = `0 / ${MAX_PHOTOS}`;
     selectedCountSpan.textContent = '0';
     selectionMessage.textContent = '';
+    
+    // Reset filter
     video.style.filter = 'none';
-    currentFilter = 'none';
+    currentFilterStyle = 'none';
+    
     startButton.classList.remove('hidden');
     takePhotoBtn.classList.add('hidden');
     restartButton.classList.add('hidden');
@@ -522,6 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
     photoCount++;
     photoCountDisplay.textContent = `${photoCount} / ${MAX_PHOTOS}`;
     
+    // Logic chụp ảnh 16:9 (crop)
     const vWidth = video.videoWidth;
     const vHeight = video.videoHeight;
     const vRatio = vWidth / vHeight;
@@ -538,22 +588,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (vRatio > targetRatio) {
         sHeight = vHeight;
         sWidth = vHeight * targetRatio;
-        sX = (vWidth - sWidth) / 2;
+        sX = (vWidth - sWidth) / 2; // Cắt 2 bên
         sY = 0;
     } else {
         sWidth = vWidth;
         sHeight = vWidth / targetRatio;
         sX = 0;
-        sY = (vHeight - sHeight) / 2;
+        sY = (vHeight - sHeight) / 2; // Cắt trên dưới
     }
     
-    context.filter = currentFilter;
+    // Áp dụng filter (từ style) vào canvas
+    context.filter = currentFilterStyle;
+    
     context.drawImage(
         video,
         sX, sY, sWidth, sHeight,
         0, 0, targetWidth, targetHeight
     );
-    context.filter = 'none';
+    context.filter = 'none'; // Reset filter cho canvas sau khi vẽ
     
     const dataURL = canvas.toDataURL('image/png');
     addPhotoToGallery(dataURL);
@@ -566,6 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function addPhotoToGallery(dataURL) {
     const photoItem = document.createElement('div');
     photoItem.className = 'photo-item';
+    // Ảnh preview trong gallery lật lại để khớp với video
     photoItem.innerHTML = `<img src="${dataURL}" style="transform: scaleX(-1);">`;
     
     const actions = document.createElement('div');
@@ -607,6 +660,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const imageSources = [];
     checkedBoxes.forEach(cb => {
+      // Lấy ảnh gốc (không lật)
       const img = cb.closest('.photo-item').querySelector('img');
       imageSources.push(img.src);
     });
@@ -614,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function() {
     composeAndDownload(imageSources);
   }
   
-  // === HÀM VẼ KHUNG ẢNH MỚI (RẤT QUAN TRỌNG) ===
+  // === HÀM VẼ KHUNG ẢNH MỚI (THEO MẪU + STICKER SVG) ===
   async function composeAndDownload(imageSources) {
     
     const finalCanvas = document.createElement('canvas');
@@ -627,9 +681,9 @@ document.addEventListener('DOMContentLoaded', function() {
     finalCanvas.height = finalHeight;
     
     // 1. Vẽ nền gradient (hồng -> tím nhạt)
-    const gradient = ctx.createLinearGradient(0, 0, finalWidth, finalHeight);
-    gradient.addColorStop(0, '#FFC0CB'); // Pink
-    gradient.addColorStop(1, '#E6E6FA'); // Lavender
+    const gradient = ctx.createLinearGradient(0, 0, 0, finalHeight);
+    gradient.addColorStop(0, '#fde4ea'); // Hồng nhạt
+    gradient.addColorStop(1, '#d8d8f8'); // Tím nhạt
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, finalWidth, finalHeight);
     
@@ -638,46 +692,58 @@ document.addEventListener('DOMContentLoaded', function() {
       return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve(img);
-        img.onerror = reject;
+        img.onerror = (e) => reject(new Error('Lỗi tải ảnh đã chụp: ' + e));
         img.src = src;
       });
     });
-    const loadedImages = await Promise.all(imagePromises);
+    
+    let loadedImages;
+    try {
+        loadedImages = await Promise.all(imagePromises);
+    } catch (e) {
+        console.error(e);
+        alert('Lỗi khi tải ảnh đã chụp, không thể tạo khung.');
+        return;
+    }
 
-    // 3. Tính toán bố cục 3x2 (3 cột, 2 hàng)
-    const gridPadding = 25;
-    const gridWidth = 1600;
-    const gridHeight = 825;
+    // 3. Tính toán bố cục 3 CỘT, 2 HÀNG (3x2)
+    const gridCols = 3;
+    const gridRows = 2;
+    const gridPadding = 25; // Khoảng cách giữa các ảnh và viền khung
     
-    const photoWidth = (gridWidth - (gridPadding * 4)) / 3;
-    const photoHeight = (gridHeight - (gridPadding * 3)) / 2;
+    // Kích thước khung trắng bên trong
+    const innerFrameWidth = 1600;
+    const innerFrameHeight = 825;
+    const innerFrameX = (finalWidth - innerFrameWidth) / 2; // (1920 - 1600) / 2 = 160
+    const innerFrameY = (finalHeight - innerFrameHeight) / 2; // (1080 - 825) / 2 = 127.5
+    
+    // Kích thước mỗi ảnh (tỉ lệ 4:3)
+    const photoWidth = (innerFrameWidth - (gridPadding * (gridCols + 1))) / gridCols; // (1600 - (25*4)) / 3 = 500
+    const photoHeight = (innerFrameHeight - (gridPadding * (gridRows + 1))) / gridRows; // (825 - (25*3)) / 2 = 375
                                                              
-    const gridX = (finalWidth - gridWidth) / 2;
-    const gridY = (finalHeight - gridHeight) / 2;
-    
     // Vẽ khung trắng bên dưới
     ctx.fillStyle = 'white';
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-    ctx.shadowBlur = 20;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+    ctx.shadowBlur = 15;
     
-    // Fallback cho roundRect (một số trình duyệt có thể không hỗ trợ)
+    // Hỗ trợ roundRect hoặc fallback về rect
     if (ctx.roundRect) {
       ctx.beginPath();
-      ctx.roundRect(gridX - gridPadding, gridY - gridPadding, gridWidth + (gridPadding * 2), gridHeight + (gridPadding * 2), 30);
+      ctx.roundRect(innerFrameX, innerFrameY, innerFrameWidth, innerFrameHeight, 20);
       ctx.fill();
     } else {
-      ctx.fillRect(gridX - gridPadding, gridY - gridPadding, gridWidth + (gridPadding * 2), gridHeight + (gridPadding * 2));
+      ctx.fillRect(innerFrameX, innerFrameY, innerFrameWidth, innerFrameHeight);
     }
     ctx.shadowColor = 'transparent';
 
     // 4. Vẽ 6 tấm ảnh
     let imageIndex = 0;
-    for (let row = 0; row < 2; row++) {
-      for (let col = 0; col < 3; col++) {
+    for (let row = 0; row < gridRows; row++) {
+      for (let col = 0; col < gridCols; col++) {
         if (!loadedImages[imageIndex]) continue;
         
-        const x = gridX + (gridPadding * (col + 1)) + (photoWidth * col);
-        const y = gridY + (gridPadding * (row + 1)) + (photoHeight * row);
+        const x = innerFrameX + (gridPadding * (col + 1)) + (photoWidth * col);
+        const y = innerFrameY + (gridPadding * (row + 1)) + (photoHeight * row);
         
         const img = loadedImages[imageIndex];
         const imgRatio = img.width / img.height; // 1.777 (16:9)
@@ -688,14 +754,14 @@ document.addEventListener('DOMContentLoaded', function() {
         // Cắt ảnh 16:9 cho vừa khung 4:3
         sHeight = img.height;
         sWidth = img.height * frameRatio;
-        sX = (img.width - sWidth) / 2;
+        sX = (img.width - sWidth) / 2; // Cắt 2 bên để giữ phần trung tâm
         sY = 0;
         
-        ctx.save();
+        ctx.save(); // Lưu trạng thái canvas
         ctx.beginPath();
         if (ctx.roundRect) {
-            ctx.roundRect(x, y, photoWidth, photoHeight, 15);
-            ctx.clip();
+            ctx.roundRect(x, y, photoWidth, photoHeight, 15); // Bo góc cho ảnh nhỏ
+            ctx.clip(); // Cắt ảnh theo đường path này
         } else {
             ctx.rect(x, y, photoWidth, photoHeight);
             ctx.clip();
@@ -706,7 +772,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sX, sY, sWidth, sHeight,
             x, y, photoWidth, photoHeight
         );
-        ctx.restore();
+        ctx.restore(); // Khôi phục trạng thái canvas
         
         // Vẽ viền
         ctx.strokeStyle = '#ffb6c1';
@@ -723,35 +789,30 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // 5. Vẽ Stickers (Lấy từ HTML)
-    const stickerBear = document.getElementById('sticker-bear');
-    const stickerCat = document.getElementById('sticker-cat');
-    const stickerFrog = document.getElementById('sticker-frog');
-    const stickerCloud = document.getElementById('sticker-cloud');
-    const stickerLollipop = document.getElementById('sticker-lollipop');
-    const stickerCupcake = document.getElementById('sticker-cupcake');
-    const stickerGift = document.getElementById('sticker-gift');
-    
-    ctx.globalAlpha = 0.95;
+    // 5. Vẽ Stickers (Lấy từ đối tượng stickerImages đã được tải sẵn)
     try {
-      if (stickerCloud) ctx.drawImage(stickerCloud, 40, 40, 150, 100);
-      if (stickerCupcake) ctx.drawImage(stickerCupcake, 200, 110, 80, 80);
-      if (stickerFrog) ctx.drawImage(stickerFrog, 1730, 40, 130, 110);
-      if (stickerCat) ctx.drawImage(stickerCat, 1710, 880, 150, 150);
-      if (stickerLollipop) ctx.drawImage(stickerLollipop, 1630, 890, 120, 120);
-      if (stickerBear) ctx.drawImage(stickerBear, 40, 880, 150, 150);
-      if (stickerGift) ctx.drawImage(stickerGift, 180, 920, 100, 100);
-    } catch (e) {
-      console.error("Lỗi khi vẽ sticker (ảnh có thể chưa tải xong):", e);
-      // Tiếp tục dù sticker có lỗi
-    }
-    ctx.globalAlpha = 1.0;
+      ctx.globalAlpha = 0.9; // Độ trong suốt nhẹ cho sticker
+      if (stickerImages['svg-cloud']) ctx.drawImage(stickerImages['svg-cloud'], 40, 40, 150, 100);
+      if (stickerImages['svg-cupcake']) ctx.drawImage(stickerImages['svg-cupcake'], 200, 110, 80, 80);
+      if (stickerImages['svg-frog']) ctx.drawImage(stickerImages['svg-frog'], 1730, 40, 130, 110);
+      if (stickerImages['svg-cat']) ctx.drawImage(stickerImages['svg-cat'], 1710, 880, 150, 150);
+      if (stickerImages['svg-lollipop']) ctx.drawImage(stickerImages['svg-lollipop'], 1630, 890, 120, 120);
+      if (stickerImages['svg-bear']) ctx.drawImage(stickerImages['svg-bear'], 40, 880, 150, 150);
+      if (stickerImages['svg-gift']) ctx.drawImage(stickerImages['svg-gift'], 180, 920, 100, 100);
+      ctx.globalAlpha = 1.0;
 
-    ctx.font = '50px Arial';
-    ctx.fillStyle = '#ff69b4';
-    ctx.fillText('♫ ♪', 1650, 80);
+      // Chữ "MÓN QUÀ NHỎ CỦA ANH"
+      ctx.font = '70px Pacifico'; // Sử dụng font Pacifico
+      ctx.fillStyle = '#ff69b4';
+      ctx.textAlign = 'center';
+      ctx.fillText('LOVE U 4EVER <3', finalWidth / 2, 80);
+      ctx.textAlign = 'left'; // Reset về mặc định
+
+    } catch (e) {
+      console.error("Lỗi khi vẽ sticker hoặc chữ:", e);
+    }
     
-    // 6. Vẽ trái tim
+    // 6. Vẽ trái tim (giữ nguyên, hoạt động tốt)
     function drawHeart(x, y, size, color) {
         ctx.fillStyle = color;
         ctx.beginPath();
