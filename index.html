@@ -98,32 +98,29 @@ p.subtitle {
 
 .booth-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
+  flex-direction: column;
+  gap: 0;
   align-items: center;
   justify-content: center;
   margin: 25px 0;
   width: 100%;
-  max-width: 820px;
+  max-width: 640px;
 }
 
-video,
-canvas {
-  /* MỚI: Tự động co giãn và giữ đúng tỉ lệ khung hình */
-  width: 100%;      /* Tự co giãn theo container */
-  max-width: 400px; /* Giữ kích thước gốc trên desktop */
-  height: auto;     /* Tự động tính chiều cao để không bị méo/lùn */
-
+video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transform: scaleX(-1);
   border: 6px solid #ff69b4;
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, filter 0.3s ease;
 }
 
-.video:hover,
-canvas:hover {
-  transform: scale(1.02)
+canvas {
+  display: none;
 }
 
 button {
@@ -344,6 +341,17 @@ button:disabled {
   <div class="gallery" id="photoGallery"></div>
   <button id="downloadButton" disabled>⬇️ Tải 6 ảnh đã chọn về khung</button>
 </div>
+
+<div id="stickerAssets" style="display: none;">
+  <img id="sticker-bear" src="data:image/png;base64,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">
+  <img id="sticker-cat" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADvElEQVR4nO3dyXqiMBCG4SABFaUUxAVB8fz/n7pSA4kQO9POnM/7fMkkZDKZTGo9DwAAAAAAAAAAAAAAAADAr+jo6PzUdd0/rtfrHx6Pxx/r9fp7Xdd/SJKEI5HIv4lEwh/q9fqf6XR6z/P8W57nP7Is+8+y7N/Pzs5+m5+f/13WdX9NKaX0P0sprq+v7+/vb2+llH+GEEII8zz/WZblz1LKv6SUFEV5nldK6X+WUEqllFJKf4wxSintn6WUWZY/Sxnl+0qpLMvfKIrgOF5VVdV1vSAI/jBN8w8hhM/zvM/z/Ndsttu8tLR0x+Pxm7qu/1mW5e/xeHwaDoc/1Ov173mev0spRVE0Njb28vJyWZZlWRZF8ff7/S9lWf5tfn7+qdVq/ZBl2b+UUp7nlVIqpeQ4zmQyGY/HT5vN5uPj4yRJ8jyv6/rW1taWlpaura1tf39/c3OzXC6fmpqaX15ePp1O/ywMw8dxHJfLpVRKaZriOG7bthBCpZQsy/Pz81QqlWKxODc3t7S0dHp6uqoqqVSqUqlEQlFKSZIYY4RQuVxuNptTqcRxfDweTyaTSqmSJEmStNlsXlhY2NzcXFtb+9bW1tbW1nQ6/ZBlWYZhyuWyLMtCCHEcZ1lmWRbDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzDMAzD+DeO4xNPhuGkpmndbrcvLS3Nzc11Op3dbncsFkMQhCTJZrO52WwODw8fHx8fHx8fHx9/fHycpmmSJEnT9Pr6+vLy8urq6urq6urq6tTU1Nra2v7+/v7+/vLy8vr6+vj4eDqdPjw8zGazWZZFCDGbzdZ1XVmWKYoSicQsy4QQWZYdDodCCCHEDMOEEI1GQwgxTRNGyPO8KAohxBjjmubq6mpHR0dd15vN5lAoFJfLpZQihKSUrutpmtI0pdPppFIpJpNZXl6urq4ODQ0tLS2tqqpqbGxsbW2tVqvt7e2tbW1tbW1NTU1FRUWNjY1KpVJKSZIkRVE0TRNCRFEUjuPwPA8hZFlW1/Xb29uvXr26ublZrVZrmubx8bFarb7y8vLw8LCiKAkhxhgIITHGyWQyHA6zLGuapiiKUqlUJBJpNJqqqmpwcLCiKDzP6+vrR0ZGhoeH6+vrsyz7+/t7NBpNTU0NDQ0NCAgQiURisdjg4ODw8PDKysrV1dXW1tarV69ubW3tdDqNRqNcLkeSJEIIIYTxeFyv1wcGBoZCoXK5HACEEGI8Hq+urkIIYRgmSZKWlpaGhoZ2d3dra2uDwWAcxyGEEEJYlmVZFgBCCCEhhBCllM/neZ6XUvqfOI7r9frOzs729vYDAwMHBweHh4dHRkZWV1deXl5TU1NRURFHUZRSNE2TyWSz2ZIkCQAAAAAAAAAAAAAAAAAAAAAAAAAAAPwz/wG5m36d1CRyAQAAAABJRU5ErkJggg==">
+  <img id="sticker-frog" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAACvklEQVR4nO3d63KbMBRGYSBIVFAExUUUi+L//7oOlGAn9pDs9q3l4/M0w0zIZLLpNR4AAAAAAAAAAAAAAACAe+ro6EjdNf3S6/WPj8fj94/H4+/1dV2EEFZVVbIsQwiTySQEQiKReDwez/O+KIqmaUqShMPhMpvNhBBBEARBkCRJwzAIISiKgiAIvu9FUYwxvu+TJGma5vF4oiiKoqgQwqZpvu9jGOZ53nUdpZTzPEIIHMfpOE4pFUUhhCiKQghFUbIsY4xFUUhSlFKEEEKImqYoimIcx7IsSZIQAlmWlFKEEFJKeZ5TSgkhhBCUUgBSSpZlCSEhhGEYhBAURSHERFG03W7X6/VyuRwAgM/ncRyXy+VyuVwul8Fg0Ol0cByXy+U8z7vd7nA4bDYbYRimUqmUUmVZ1ul0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6nU+l0WlXVcZxCoRBCjDGllNfrtVqtqqq6LMuSJFmW1XW9XC5jDDDGwzAMw3Q6nUqlUqlUoVAohBDGGI7jdru9Wq1arVZYlrVarcYYsiz7vo8Qvu8hhEajQSGEEFJKuVwulUrpdDqdTsfzPMMwUsoYQ8uyCCGaZhiGSZKEEEIIIUIIIUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEML/Tf4BvL1sU2rYkYkAAAAASUVORK5CYII=">
+  <img id="sticker-cloud" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADhklEQVR4nO3d4XqiMBQGYCwQFRIVF0Wx/v9/3VADiZ1pZ87n/b5nEplMJrWehwAAAAAAAAAAAAAAAMDPSkdH56eSJL/xer3x+Pg4/nh8fPyk1+vvSqXyC5IkLMvSNE0I8fPzc0qpKIrVarVarbquE0JBEFmWdU3TdDqdTqcjhHAch5SiKIqiyHEcQohpmizLsixjDBzHruvK5XLz8/Msy7IsS5bldrudIAiKoiiKIgDAcZwiigAApZQBAFmWKYXValVVVZIkhBCllCiKpmmEEADAOI4AQAgBADAMAADGGAAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAQGtraxtCCCEsy7quh8NhvV6n0+lqtVqtVpIkRVGmaZqmKY7jNE2SJDAMAwDquuM4TqlUKpVK4XBYlWWdThdCCCGEEEKlUnmeV2q1Xq+Xz+eTySQIgiRJsq5rNpsjhHmeJ0lCCCEIAkIIpmkyDSGEEMdxpRQhhGEYiqKEEOI4juN4Pp9TSjDGGEbRdd1yuRwiqVQq4XBYrVZVVXEcJUmSJEmSJAAAyWQyx3GdTifLsqZpSqmSJClJEgCllCzLkiQhhBBCiFJKURRBEBiGKYoSicSkUqlyuRwAQJZllmVBEHieV1XVarVCCLFYLMdxOp2OYRjHcVmWIAhhGEIIpmmqquq6zmaz2Ww2nU4nSQIAMIxBpVLBYDBcLleWZVmWUso0TeM4FEVBEERVVZIkNE07ODg4Ozs7Ozt7eHh4fHz88fExGAxmZmZWV1dXV1dXV1dTU1NjY2NTU1NjY2OTk5NHjx4dHR0dHR398/Pz8fExGAzW1tZWV1fHx8eHh4fT09NrampmZmYODg4ODg4mkymKouM4pmmEEKWU6XQaDocDAwNDQ0O7u7vb29sLhcJyuVwul9vt9uHh4bNnzx4+fPj8+fMPHz7c3d1durq6urp6cnJydHT07NmzgYGBVCoVEUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEeF/8AzM7cNQy+y/eAAAAAElFTkSuQmCC">
+  <img id="sticker-lollipop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADNElEQVR4nO3d4XKiMBQGYCwQFRIVF0Wx/v9/3VADiZ1pZ87n/b5nEplMJrWehwAAAAAAAAAAAAAAAMDPSkdH56eSJL/xer3x+Pg4/nh8fPyk1+vvSqXyC5IkLMvSNE0I8fPzc0qpKIrVarVarbquE0JBEFmWdU3TdDqdTqcjhHAch5SiKIqiyHEcQohpmizLsixjDBzHruvK5XLz8/Msy7IsS5bldrudIAiKoiiKIgDAcZwiigAApZQBAFmWKYXValVVVZIkhBCllCiKpmmEEADAOI4AQAgBADAMAADGGAAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAQGtraxtCCCEsy7quh8NhvV6n0+lqtVqtVpIkRVGmaZqmKY7jNE2SJDAMAwDquuM4TqlUKpVK4XBYlWWdThdCCCGEEEKlUnmeV2q1Xq+Xz+eTySQIgiRJsq5rNpsjhHmeJ0lCCCEIAkIIpmkyDSGEEMdxpRQhhGEYiqKEEOI4juN4Pp9TSjDGGEbRdd1yuRwiqVQq4XBYrVZVVXEcJUmSJEmSJAAAyWQyx3GdTifLsqZpSqmSJClJEgCllCzLkiQhhBBCiFJKURRBEBiGKYoSicSkUqlyuRwAQJZllmVBEHieV1XVarVCCLFYLMdxOp2OYRjHcVmWIAhhGEIIpmmqquq6zmaz2Ww2nU4nSQIAMIxBpVLBYDBcLleWZVmWUso0TeM4FEVBEERVVZIkNE07ODg4Ozs7Ozt7eHh4fHz88fExGAxmZmZWV1dXV1dXV1dTU1NjY2NTU1NjY2OTk5NHjx4dHR0dHR398/Pz8fExGAzW1tZWV1fHx8eHh4fT09NrampmZmYODg4ODg4mkymKouM4pmmEEKWU6XQaDocDAwNDQ0O7u7vb29sLhcJyuVwul9vt9uHh4bNnzx4+fPj8+fMPHz7c3d1durq6urp6cnJydHT07NmzgYGBVCoVEUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEeF/8AzM7cNQy+y/eAAAAAElFTkSuQmCC">
+  <img id="sticker-cupcake" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADVElEQVR4nO3d23LiMBRGYSBCVFAExUUUi+L//+gGlGAn9pDs9q3l4/M0w0zIZLLpNR4AAAAAAAAAAAAAAACAe+ro6EjdNf3S6/WPj8fj94/H4+/1dV2EEFZVVbIsQwiTySQEQiKReDwez/O+KIqmaUqShMPhMpvNhBBBEARBkCRJwzAIISiKgiAIvu9FUYwxvu+TJGma5vF4oiiKoqgQwqZpvu9jGOZ53nUdpZTzPEIIHMfpOE4pFUUhhCiKQghFUbIsY4xFUUhSlFKEEEKImqYoimIcx7IsSZIQAlmWlFKEEFJKeZ5TSgkhhBCUUgBSSpZlCSEhhGEYhBAURSHERFG03W7X6/VyuRwAgM/ncRyXy+VyuVwul8Fg0Ol0cByXy+U8z7vd7nA4bDYbYRimUqmUUmVZ1ul0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6n0+l0Op1Op9PpdDqdTqfT6XQ6nU6nU+l0WlXVcZxCoRBCjDGllNfrtVqtqqq6LMuSJFmW1XW9XC5jDDDGwzAMw3Q6nUqlUqlUoVAohBDGGI7jdru9Wq1arVZYlrVarcYYsiz7vo8Qvu8hhEajQSGEEFJKuVwulUrpdDqdTsfzPMMwUsoYQ8uyCCGaZhiGSZKEEEIIIUIIIUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEML/Tf4BvL1sU2rYkYkAAAAASUVORK5CYII=">
+  <img id="sticker-gift" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAaVBMVEX///8AAAD8/Pzw8PCGhoYNDQ3y8vKysrITExP09PTp6em7u7ulpaWtra3FxcXNzc0/Pz8TExPZ2dmBgYEbGxuioqJ6enqenp5NTU1bW1uIiIgYGBhpaWmZmZlVVVUhISHm5uZGRkY1NTUvLy+vve5fAAADTUlEQVR4nO3dyXKiMBQGYCwQFRIVF0Wx/v9/3VADiZ1pZ87n/b5nEplMJrWehwAAAAAAAAAAAAAAAMDPSkdH56eSJL/xer3x+Pg4/nh8fPyk1+vvSqXyC5IkLMvSNE0I8fPzc0qpKIrVarVarbquE0JBEFmWdU3TdDqdTqcjhHAch5SiKIqiyHEcQohpmizLsixjDBzHruvK5XLz8/Msy7IsS5bldrudIAiKoiiKIgDAcZwiigAApZQBAFmWKYXValVVVZIkhBCllCiKpmmEEADAOI4AQAgBADAMAADGGAAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAABhjAABgjAEAgDEGAACMMQAAxhgAQGtraxtCCCEsy7quh8NhvV6n0+lqtVqtVpIkRVGmaZqmKY7jNE2SJDAMAwDquuM4TqlUKpVK4XBYlWWdThdCCCGEEEKlUnmeV2q1Xq+Xz+eTySQIgiRJsq5rNpsjhHmeJ0lCCCEIAkIIpmkyDSGEEMdxpRQhhGEYiqKEEOI4juN4Pp9TSjDGGEbRdd1yuRwiqVQq4XBYrVZVVXEcJUmSJEmSJAAAyWQyx3GdTifLsqZpSqmSJClJEgCllCzLkiQhhBBCiFJKURRBEBiGKYoSicSkUqlyuRwAQJZllmVBEHieV1XVarVCCLFYLMdxOp2OYRjHcVmWIAhhGEIIpmmqquq6zmaz2Ww2nU4nSQIAMIxBpVLBYDBcLleWZVmWUso0TeM4FEVBEERVVZIkNE07ODg4Ozs7Ozt7eHh4fHz88fExGAxmZmZWV1dXV1dXV1dTU1NjY2NTU1NjY2OTk5NHjx4dHR0dHR398/Pz8fExGAzW1tZWV1fHx8eHh4fT09NrampmZmYODg4ODg4mkymKouM4pmmEEKWU6XQaDocDAwNDQ0O7u7vb29sLhcJyuVwul9vt9uHh4bNnzx4+fPj8+fMPHz7c3d1durq6urp6cnJydHT07NmzgYGBVCoVEUIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEeF/8AzM7cNQy+y/eAAAAAElFTkSuQmCC">
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const TIME_LIMIT = 20;
@@ -373,6 +381,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const photoCountDisplay = document.getElementById('photoCountDisplay');
   const selectionMessage = document.getElementById('selectionMessage');
   const filterButtons = document.querySelectorAll('#filterControls .filter-btn');
+
+  // KHÔNG CẦN loadStickers() nữa
   
   loginButton.addEventListener('click', function() {
     const username = usernameInput.value;
@@ -381,8 +391,11 @@ document.addEventListener('DOMContentLoaded', function() {
       loginContainer.classList.add('hidden');
       photoboothApp.style.display = 'flex';
       photoboothApp.classList.remove('hidden');
+      
+      // Chạy camera trực tiếp
       startCamera();
       resetUI();
+      
     } else {
       loginError.textContent = 'Sai tên đăng nhập hoặc mật khẩu rùi nhaaa :33';
     }
@@ -401,48 +414,22 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   function startCamera() {
-    // MỚI: Tạo các yêu cầu (constraints) để hỏi camera độ phân giải cao
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-
-    // Mặc định yêu cầu 1920x1080 (Full HD, ngang) cho máy tính
     let constraints = {
       video: {
         width: { ideal: 1920 },
         height: { ideal: 1080 },
-        facingMode: 'user' // Ưu tiên camera trước
+        facingMode: 'user'
       }
     };
 
-    // Nếu là điện thoại VÀ đang cầm dọc -> Yêu cầu 1080x1920 (Full HD, dọc)
-    if (isMobile && isPortrait) {
-      constraints.video.width = { ideal: 1080 };
-      constraints.video.height = { ideal: 1920 };
-    }
-
-    navigator.mediaDevices.getUserMedia(constraints) // SỬA: Dùng constraints mới
+    navigator.mediaDevices.getUserMedia(constraints)
     .then(stream => {
       video.srcObject = stream;
-      
-      // MỚI: Thêm sự kiện cực kỳ quan trọng
-      // Đợi video stream có thông tin -> Lấy độ phân giải THỰC TẾ
-      video.onloadedmetadata = () => {
-        // Gán độ phân giải THỰC TẾ của video cho canvas
-        // Đây là mấu chốt để ảnh chụp ra có độ phân giải cao!
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-      };
-
     }).catch(error => {
-      console.error('Lỗi khi lấy camera:', error);
-      // Nếu lỗi (ví dụ camera không hỗ trợ 1080p), thử lại với cài đặt cơ bản
-      navigator.mediaDevices.getUserMedia({ video: true })
+      console.error('Lỗi khi lấy camera 1920x1080:', error);
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
         .then(stream => {
           video.srcObject = stream;
-          video.onloadedmetadata = () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-          };
         }).catch(err2 => {
           alert('Không thể truy cập camera: ' + err2.message);
         });
@@ -526,6 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
       cb.disabled = isDisabled;
     });
   }
+
   
   function takePhoto() {
     if (!isSessionActive || photoCount >= MAX_PHOTOS) {
@@ -534,13 +522,40 @@ document.addEventListener('DOMContentLoaded', function() {
     photoCount++;
     photoCountDisplay.textContent = `${photoCount} / ${MAX_PHOTOS}`;
     
-    // Phần code này giữ nguyên, nhưng bây giờ sẽ CỰC KỲ NÉT
-    // vì `canvas.width` và `canvas.height` đã được đặt là 1920x1080 (hoặc 1080x1920)
-    context.filter = currentFilter;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    context.filter = 'none'; 
+    const vWidth = video.videoWidth;
+    const vHeight = video.videoHeight;
+    const vRatio = vWidth / vHeight;
     
-    const dataURL = canvas.toDataURL('image/png'); // Đây sẽ là ảnh full HD
+    const targetWidth = 1920;
+    const targetHeight = 1080;
+    const targetRatio = targetWidth / targetHeight;
+    
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    
+    let sWidth, sHeight, sX, sY;
+
+    if (vRatio > targetRatio) {
+        sHeight = vHeight;
+        sWidth = vHeight * targetRatio;
+        sX = (vWidth - sWidth) / 2;
+        sY = 0;
+    } else {
+        sWidth = vWidth;
+        sHeight = vWidth / targetRatio;
+        sX = 0;
+        sY = (vHeight - sHeight) / 2;
+    }
+    
+    context.filter = currentFilter;
+    context.drawImage(
+        video,
+        sX, sY, sWidth, sHeight,
+        0, 0, targetWidth, targetHeight
+    );
+    context.filter = 'none';
+    
+    const dataURL = canvas.toDataURL('image/png');
     addPhotoToGallery(dataURL);
     
     if (photoCount >= MAX_PHOTOS) {
@@ -551,16 +566,16 @@ document.addEventListener('DOMContentLoaded', function() {
   function addPhotoToGallery(dataURL) {
     const photoItem = document.createElement('div');
     photoItem.className = 'photo-item';
-    const img = document.createElement('img');
-    img.src = dataURL;
+    photoItem.innerHTML = `<img src="${dataURL}" style="transform: scaleX(-1);">`;
+    
     const actions = document.createElement('div');
     actions.className = 'photo-actions';
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.disabled = true;
     checkbox.onchange = (e) => updateSelectedCount(e);
+    
     actions.appendChild(checkbox);
-    photoItem.appendChild(img);
     photoItem.appendChild(actions);
     photoGallery.appendChild(photoItem);
   }
@@ -595,25 +610,30 @@ document.addEventListener('DOMContentLoaded', function() {
       const img = cb.closest('.photo-item').querySelector('img');
       imageSources.push(img.src);
     });
+    // Gọi hàm VẼ KHUNG MỚI
     composeAndDownload(imageSources);
   }
   
+  // === HÀM VẼ KHUNG ẢNH MỚI (RẤT QUAN TRỌNG) ===
   async function composeAndDownload(imageSources) {
-    const compositeCanvas = document.createElement('canvas');
-    const ctx = compositeCanvas.getContext('2d');
-    const photoWidth = 400;
-    const photoHeight = 300;
-    const padding = 20;
-    const frameWidth = (photoWidth * 2) + (padding * 3);
-    const frameHeight = (photoHeight * 3) + (padding * 4);
-    compositeCanvas.width = frameWidth;
-    compositeCanvas.height = frameHeight;
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, frameWidth, frameHeight);
-    ctx.strokeStyle = '#ff69b4';
-    ctx.lineWidth = 8;
-    ctx.strokeRect(0, 0, frameWidth, frameHeight);
     
+    const finalCanvas = document.createElement('canvas');
+    const ctx = finalCanvas.getContext('2d');
+    
+    const finalWidth = 1920;
+    const finalHeight = 1080;
+    
+    finalCanvas.width = finalWidth;
+    finalCanvas.height = finalHeight;
+    
+    // 1. Vẽ nền gradient (hồng -> tím nhạt)
+    const gradient = ctx.createLinearGradient(0, 0, finalWidth, finalHeight);
+    gradient.addColorStop(0, '#FFC0CB'); // Pink
+    gradient.addColorStop(1, '#E6E6FA'); // Lavender
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, finalWidth, finalHeight);
+    
+    // 2. Tải 6 tấm ảnh đã chọn
     const imagePromises = imageSources.map(src => {
       return new Promise((resolve, reject) => {
         const img = new Image();
@@ -622,46 +642,142 @@ document.addEventListener('DOMContentLoaded', function() {
         img.src = src;
       });
     });
-    
     const loadedImages = await Promise.all(imagePromises);
+
+    // 3. Tính toán bố cục 3x2 (3 cột, 2 hàng)
+    const gridPadding = 25;
+    const gridWidth = 1600;
+    const gridHeight = 825;
     
+    const photoWidth = (gridWidth - (gridPadding * 4)) / 3;
+    const photoHeight = (gridHeight - (gridPadding * 3)) / 2;
+                                                             
+    const gridX = (finalWidth - gridWidth) / 2;
+    const gridY = (finalHeight - gridHeight) / 2;
+    
+    // Vẽ khung trắng bên dưới
+    ctx.fillStyle = 'white';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+    ctx.shadowBlur = 20;
+    
+    // Fallback cho roundRect (một số trình duyệt có thể không hỗ trợ)
+    if (ctx.roundRect) {
+      ctx.beginPath();
+      ctx.roundRect(gridX - gridPadding, gridY - gridPadding, gridWidth + (gridPadding * 2), gridHeight + (gridPadding * 2), 30);
+      ctx.fill();
+    } else {
+      ctx.fillRect(gridX - gridPadding, gridY - gridPadding, gridWidth + (gridPadding * 2), gridHeight + (gridPadding * 2));
+    }
+    ctx.shadowColor = 'transparent';
+
+    // 4. Vẽ 6 tấm ảnh
     let imageIndex = 0;
-    for (let row = 0; row < 3; row++) {
-      for (let col = 0; col < 2; col++) {
-        const x = padding * (col + 1) + photoWidth * col;
-        const y = padding * (row + 1) + photoHeight * row;
-        ctx.drawImage(loadedImages[imageIndex], x, y, photoWidth, photoHeight);
+    for (let row = 0; row < 2; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (!loadedImages[imageIndex]) continue;
+        
+        const x = gridX + (gridPadding * (col + 1)) + (photoWidth * col);
+        const y = gridY + (gridPadding * (row + 1)) + (photoHeight * row);
+        
+        const img = loadedImages[imageIndex];
+        const imgRatio = img.width / img.height; // 1.777 (16:9)
+        const frameRatio = photoWidth / photoHeight; // 1.333 (4:3)
+        
+        let sWidth, sHeight, sX, sY;
+        
+        // Cắt ảnh 16:9 cho vừa khung 4:3
+        sHeight = img.height;
+        sWidth = img.height * frameRatio;
+        sX = (img.width - sWidth) / 2;
+        sY = 0;
+        
+        ctx.save();
+        ctx.beginPath();
+        if (ctx.roundRect) {
+            ctx.roundRect(x, y, photoWidth, photoHeight, 15);
+            ctx.clip();
+        } else {
+            ctx.rect(x, y, photoWidth, photoHeight);
+            ctx.clip();
+        }
+        
+        ctx.drawImage(
+            img,
+            sX, sY, sWidth, sHeight,
+            x, y, photoWidth, photoHeight
+        );
+        ctx.restore();
+        
+        // Vẽ viền
         ctx.strokeStyle = '#ffb6c1';
         ctx.lineWidth = 4;
-        ctx.strokeRect(x, y, photoWidth, photoHeight);
+        if (ctx.roundRect) {
+            ctx.beginPath();
+            ctx.roundRect(x, y, photoWidth, photoHeight, 15);
+            ctx.stroke();
+        } else {
+            ctx.strokeRect(x, y, photoWidth, photoHeight);
+        }
+        
         imageIndex++;
       }
     }
     
+    // 5. Vẽ Stickers (Lấy từ HTML)
+    const stickerBear = document.getElementById('sticker-bear');
+    const stickerCat = document.getElementById('sticker-cat');
+    const stickerFrog = document.getElementById('sticker-frog');
+    const stickerCloud = document.getElementById('sticker-cloud');
+    const stickerLollipop = document.getElementById('sticker-lollipop');
+    const stickerCupcake = document.getElementById('sticker-cupcake');
+    const stickerGift = document.getElementById('sticker-gift');
     
-    const heartSize = 60;
-    const heartX = frameWidth - padding - heartSize - 10;
-    const heartY = padding + 10;
+    ctx.globalAlpha = 0.95;
+    try {
+      if (stickerCloud) ctx.drawImage(stickerCloud, 40, 40, 150, 100);
+      if (stickerCupcake) ctx.drawImage(stickerCupcake, 200, 110, 80, 80);
+      if (stickerFrog) ctx.drawImage(stickerFrog, 1730, 40, 130, 110);
+      if (stickerCat) ctx.drawImage(stickerCat, 1710, 880, 150, 150);
+      if (stickerLollipop) ctx.drawImage(stickerLollipop, 1630, 890, 120, 120);
+      if (stickerBear) ctx.drawImage(stickerBear, 40, 880, 150, 150);
+      if (stickerGift) ctx.drawImage(stickerGift, 180, 920, 100, 100);
+    } catch (e) {
+      console.error("Lỗi khi vẽ sticker (ảnh có thể chưa tải xong):", e);
+      // Tiếp tục dù sticker có lỗi
+    }
+    ctx.globalAlpha = 1.0;
+
+    ctx.font = '50px Arial';
     ctx.fillStyle = '#ff69b4';
+    ctx.fillText('♫ ♪', 1650, 80);
     
-    for (let i = 0; i < 2; i++) {
-      ctx.beginPath();
-      ctx.arc(heartX + heartSize * 0.3 + i * heartSize * 0.4, heartY + heartSize * 0.3, heartSize * 0.3, 0, Math.PI * 2, false);
-      ctx.fill();
+    // 6. Vẽ trái tim
+    function drawHeart(x, y, size, color) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x, y + size / 4);
+        ctx.quadraticCurveTo(x, y, x + size / 4, y);
+        ctx.quadraticCurveTo(x + size / 2, y, x + size / 2, y + size / 4);
+        ctx.quadraticCurveTo(x + size / 2, y, x + (size * 3/4), y);
+        ctx.quadraticCurveTo(x + size, y, x + size, y + size / 4);
+        ctx.quadraticCurveTo(x + size, y + size / 2, x + size / 2, y + size * 3/4);
+        ctx.quadraticCurveTo(x, y + size / 2, x, y + size / 4);
+        ctx.fill();
     }
     
-    ctx.beginPath();
-    ctx.moveTo(heartX + heartSize * 0.5, heartY + heartSize * 0.9);
-    ctx.lineTo(heartX + heartSize * 0.1, heartY + heartSize * 0.4);
-    ctx.lineTo(heartX + heartSize * 0.9, heartY + heartSize * 0.4);
-    ctx.closePath();
-    ctx.fill();
+    drawHeart(300, 50, 40, '#FF69B4');
+    drawHeart(1550, 90, 30, '#FF69B4');
+    drawHeart(1800, 300, 50, '#FF69B4');
+    drawHeart(100, 500, 35, '#FFB6C1');
+    drawHeart(50, 800, 40, '#FF69B4');
+    drawHeart(1600, 850, 30, '#FFB6C1');
+    drawHeart(1850, 700, 40, '#FF69B4');
     
-    
-    const finalDataURL = compositeCanvas.toDataURL('image/png');
+    // 7. Tải ảnh về
+    const finalDataURL = finalCanvas.toDataURL('image/png');
     const a = document.createElement('a');
     a.href = finalDataURL;
-    a.download = 'photobooth_phuongthy.png';
+    a.download = 'photobooth_phuongthy_frame.png';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
