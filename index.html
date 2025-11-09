@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Món quà nhỏ của anh</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fffacd;
+      padding: 20px;
+      position: relative;
+      min-height: 100vh;
+      box-sizing: border-box;
+      justify-content: center
+    }
+
+    h1, h2 {
+      color: #333;
+      margin-bottom: 5px;
+      font-weight: 700
+    }
+
+    p.subtitle {
+      font-size: 1em;
+      color: #666;
+      margin-top: 0;
+      margin-bottom: 20px
+    }
+
+    #loginContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 400px
+    }
+
+    #loginContainer h2 {
+      margin-top: 0;
+      margin-bottom: 20px
+    }
+
+    #loginContainer div {
+      margin-bottom: 15px;
+      width: 100%
+    }
+
+    #loginContainer label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555
+    }
+
+    #loginContainer input[type="text"],
+    #loginContainer input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px
+    }
+
+    #loginError {
+      color: #dc3545;
+      font-size: 14px;
+      height: 20px;
+      text-align: center
+    }
+
+    #loginButton {
+      background-color: #ff69b4;
+    }
+
+    .loginButton:hover {
+      background-color: #e0529d
+    }
+
+    .hidden {
+      display: none !important
+    }
+
+    #photoboothApp {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%
+    }
+
+    .booth-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      align-items: center;
+      justify-content: center;
+      margin: 25px 0
+    }
+
+    video,
+    canvas {
+      width: 400px;
+      height: 300px;
+      border: 6px solid #ff69b4;
+      border-radius: 15px;
+      background-color: white;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, filter 0.3s ease;
+    }
+
+    .video:hover,
+    canvas:hover {
+      transform: scale(1.02)
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.2s;
+      font-size: 16px
+    }
+
+    button:hover {
+      background-color: #e0529d;
+      transform: translateY(-2px)
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      transform: none !important
+    }
+
+    #controls {
+      margin-bottom: 15px
+    }
+
+    #statusContainer {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 700px;
+      background: #fff;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-top: 20px
+    }
+
+    .status-item {
+      text-align: center;
+      font-size: 19px;
+      font-weight: bold;
+      color: #444
+    }
+
+    .status-item span {
+      display: block;
+      font-size: 26px;
+      color: #ff69b4;
+      margin-top: 6px
+    }
+
+    #filterControls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px
+    }
+
+    .filter-btn {
+      background-color: #f8c5e0;
+      color: #555;
+      font-size: 13px;
+      padding: 7px 14px;
+      border-radius: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1)
+    }
+
+    .filter-btn:hover {
+      background-color: #f5b0d0
+    }
+
+    #takePhotoBtn {
+      background-color: #8e2de2
+    }
+
+    .takePhotoBtn:hover {
+      background-color: #741bb7
+    }
+
+    #restartButton {
+      background-color: #ffd700;
+      color: #333
+    }
+
+    .restartButton:hover {
+      background-color: #e6c200
+    }
+
+    #downloadButton {
+      background-color: #00bfff
+    }
+
+    .downloadButton:hover {
+      background-color: #0099cc
+    }
+
+    .photo-actions button {
+      background-color: #ff4d4d
+    }
+
+    .photo-actions button:hover {
+      background-color: #e63939
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 25px
+    }
+
+    .photo-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding-bottom: 8px;
+      transition: transform 0.2s ease
+    }
+
+    .photo-item:hover {
+      transform: translateY(-5px)
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px
+    }
+
+    .photo-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .photo-actions input[type="checkbox"] {
+      transform: scale(1.3);
+      cursor: pointer
+    }
+
+    .photo-actions input[type="checkbox"]:disabled {
+      cursor: not-allowed
+    }
+
+    .counter {
+      margin: 10px;
+      font-size: 17px;
+      color: #444;
+      font-weight: bold
+    }
+
+    #selectionMessage {
+      color: #dc3545;
+      font-size: 15px;
+      height: 22px;
+      font-weight: bold
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loginContainer">
+    <h2>🔒 Đăng nhập PhotoBooth đeeeeeeee</h2>
+    <div>
+      <label for="username">Tài khoản:</label>
+      <input type="text" id="username" name="username">
+    </div>
+    <div>
+      <label for="password">Mật khẩu:</label>
+      <input type="password" id="password" name="password">
+    </div>
+    <p id="loginError"></p>
+    <button id="loginButton">Đăng nhập nhóoo</button>
+  </div>
+  <div id="photoboothApp" class="hidden">
+    <h1>✨ PhotoBooth của Phương Thy ✨</h1>
+    <p class="subtitle">em bé iu của NT :3</p>
+    <div id="statusContainer">
+      <div class="status-item">Thời gian<span id="timerDisplay">20</span></div>
+      <div class="status-item">Số ảnh<span id="photoCountDisplay">0 / 10</span></div>
+    </div>
+    <div class="booth-container">
+      <video id="video" autoplay></video>
+      <canvas id="canvas"></canvas>
+    </div>
+    <div id="filterControls">
+      <button class="filter-btn" data-filter="none">Bình thường</button>
+      <button class="filter-btn" data-filter="vintage">Cổ điển</button>
+      <button class="filter-btn" data-filter="warm">Ấm áp</button>
+      <button class="filter-btn" data-filter="cool">Lạnh</button>
+    </div>
+    <div id="controls">
+      <button id="startButton">▶ Bắt đầu</button>
+      <button id="takePhotoBtn" class="hidden">📸 Chụp Ảnh</button>
+      <button id="restartButton" class="hidden">🔄 Làm lại</button>
+    </div>
+    <hr style="width: 80%; border: 1px solid #ddd; margin: 15px 0;">
+    <h2>Thư viện ảnh</h2>
+    <p>Sau khi chụp xong, em chọn tối đa 6 ảnh đẹp nhất</p>
+    <div class="counter">Ảnh đã chọn: <span id="selectedCount">0</span> / 6</div>
+    <p id="selectionMessage"></p>
+    <div class="gallery" id="photoGallery"></div>
+    <button id="downloadButton" disabled>⬇️ Tải 6 ảnh đã chọn về khung</button>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const TIME_LIMIT = 20;
+      const MAX_PHOTOS = 10;
+      const MAX_SELECTIONS = 6;
+      let timer;
+      let timeLeft = TIME_LIMIT;
+      let photoCount = 0;
+      let isSessionActive = false;
+      let currentFilter = 'none';
+      const loginContainer = document.getElementById('loginContainer');
+      const photoboothApp = document.getElementById('photoboothApp');
+      const loginButton = document.getElementById('loginButton');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const loginError = document.getElementById('loginError');
+      const video = document.getElementById('video');
+      const canvas = document.getElementById('canvas');
+      const context = canvas.getContext('2d');
+      const photoGallery = document.getElementById('photoGallery');
+      const selectedCountSpan = document.getElementById('selectedCount');
+      const startButton = document.getElementById('startButton');
+      const takePhotoBtn = document.getElementById('takePhotoBtn');
+      const restartButton = document.getElementById('restartButton');
+      const downloadButton = document.getElementById('downloadButton');
+      const timerDisplay = document.getElementById('timerDisplay');
+      const photoCountDisplay = document.getElementById('photoCountDisplay');
+      const selectionMessage = document.getElementById('selectionMessage');
+      const filterButtons = document.querySelectorAll('#filterControls .filter-btn');
+      
+      loginButton.addEventListener('click', function() {
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+        if (username === 'Nguyentranphuongthy' && password === '07022007') {
+          loginContainer.classList.add('hidden');
+          photoboothApp.style.display = 'flex';
+          photoboothApp.classList.remove('hidden');
+          startCamera();
+          resetUI();
+        } else {
+          loginError.textContent = 'Sai tên đăng nhập hoặc mật khẩu rùi nhaaa :33';
+        }
+      });
+      
+      startButton.addEventListener('click', startSession);
+      takePhotoBtn.addEventListener('click', takePhoto);
+      restartButton.addEventListener('click', restartSession);
+      downloadButton.addEventListener('click', downloadSelectedPhotos);
+      
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter;
+          applyFilter(filter);
+        });
+      });
+      
+      function startCamera() {
+        navigator.mediaDevices.getUserMedia({
+          video: true
+        }).then(stream => {
+          video.srcObject = stream;
+        }).catch(error => {
+          alert('Không thể truy cập camera: ' + error.message);
+        });
+      }
+      
+      function applyFilter(filter) {
+        let filterValue = 'none';
+        switch (filter) {
+          case 'vintage':
+            filterValue = 'sepia(80%) contrast(110%) saturate(90%) brightness(95%)';
+            break;
+          case 'warm':
+            filterValue = 'sepia(40%) saturate(150%) brightness(105%) hue-rotate(-10deg)';
+            break;
+          case 'cool':
+            filterValue = 'grayscale(20%) contrast(110%) brightness(105%) hue-rotate(10deg)';
+            break;
+          case 'none':
+          default:
+            filterValue = 'none';
+        }
+        video.style.filter = filterValue;
+        currentFilter = filterValue;
+      }
+      
+      function resetUI() {
+        clearInterval(timer);
+        photoGallery.innerHTML = '';
+        timeLeft = TIME_LIMIT;
+        photoCount = 0;
+        isSessionActive = false;
+        timerDisplay.textContent = timeLeft;
+        photoCountDisplay.textContent = `0 / ${MAX_PHOTOS}`;
+        selectedCountSpan.textContent = '0';
+        selectionMessage.textContent = '';
+        video.style.filter = 'none';
+        currentFilter = 'none';
+        startButton.classList.remove('hidden');
+        takePhotoBtn.classList.add('hidden');
+        restartButton.classList.add('hidden');
+        downloadButton.disabled = true;
+        disableCheckboxes(true);
+      }
+      
+      function startSession() {
+        isSessionActive = true;
+        startButton.classList.add('hidden');
+        takePhotoBtn.classList.remove('hidden');
+        restartButton.classList.remove('hidden');
+        timer = setInterval(updateTimer, 1000);
+      }
+      
+      function updateTimer() {
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        if (timeLeft <= 0) {
+          endSession();
+        }
+      }
+      
+      function endSession() {
+        clearInterval(timer);
+        isSessionActive = false;
+        timerDisplay.textContent = "Hết giờ :)))";
+        takePhotoBtn.classList.add('hidden');
+        disableCheckboxes(false);
+        downloadButton.disabled = false;
+        alert(`Đã hết! Em đã chụp ${photoCount} ảnh. Giờ hãy chọn tối đa ${MAX_SELECTIONS} ảnh đẹp nhất.`);
+      }
+      
+      function restartSession() {
+        if (confirm('Em có chắc muốn làm lại hongg. Toàn bộ ảnh đã chụp sẽ bị xóa á :))).')) {
+          resetUI();
+        }
+      }
+      
+      function disableCheckboxes(isDisabled) {
+        const checkboxes = document.querySelectorAll('.photo-item input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+          cb.disabled = isDisabled;
+        });
+      }
+      
+      function takePhoto() {
+        if (!isSessionActive || photoCount >= MAX_PHOTOS) {
+          return;
+        }
+        photoCount++;
+        photoCountDisplay.textContent = `${photoCount} / ${MAX_PHOTOS}`;
+        
+    
+        context.filter = currentFilter;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        context.filter = 'none'; 
+        
+        const dataURL = canvas.toDataURL('image/png');
+        addPhotoToGallery(dataURL);
+        
+        if (photoCount >= MAX_PHOTOS) {
+          endSession();
+        }
+      }
+      
+      function addPhotoToGallery(dataURL) {
+        const photoItem = document.createElement('div');
+        photoItem.className = 'photo-item';
+        const img = document.createElement('img');
+        img.src = dataURL;
+        const actions = document.createElement('div');
+        actions.className = 'photo-actions';
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.disabled = true;
+        checkbox.onchange = (e) => updateSelectedCount(e);
+        actions.appendChild(checkbox);
+        photoItem.appendChild(img);
+        photoItem.appendChild(actions);
+        photoGallery.appendChild(photoItem);
+      }
+      
+      function updateSelectedCount(event) {
+        const checkboxes = document.querySelectorAll('.photo-item input[type="checkbox"]');
+        let count = 0;
+        checkboxes.forEach(cb => {
+          if (cb.checked) count++;
+        });
+        if (count > MAX_SELECTIONS) {
+          event.target.checked = false;
+          count--;
+          selectionMessage.textContent = `Em chỉ được chọn tối đa ${MAX_SELECTIONS} ảnh!`;
+          setTimeout(() => {
+            selectionMessage.textContent = '';
+          }, 2000);
+        } else {
+          selectionMessage.textContent = '';
+        }
+        selectedCountSpan.textContent = count;
+      }
+      
+      function downloadSelectedPhotos() {
+        const checkedBoxes = document.querySelectorAll('.photo-item input[type="checkbox"]:checked');
+        if (checkedBoxes.length !== MAX_SELECTIONS) {
+          alert(`Em cần phải chọn ĐÚNG ${MAX_SELECTIONS} ảnh để ghép khung nhaaa`);
+          return;
+        }
+        const imageSources = [];
+        checkedBoxes.forEach(cb => {
+          const img = cb.closest('.photo-item').querySelector('img');
+          imageSources.push(img.src);
+        });
+        composeAndDownload(imageSources);
+      }
+      
+      async function composeAndDownload(imageSources) {
+        const compositeCanvas = document.createElement('canvas');
+        const ctx = compositeCanvas.getContext('2d');
+        const photoWidth = 400;
+        const photoHeight = 300;
+        const padding = 20;
+        const frameWidth = (photoWidth * 2) + (padding * 3);
+        const frameHeight = (photoHeight * 3) + (padding * 4);
+        compositeCanvas.width = frameWidth;
+        compositeCanvas.height = frameHeight;
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, frameWidth, frameHeight);
+        ctx.strokeStyle = '#ff69b4';
+        ctx.lineWidth = 8;
+        ctx.strokeRect(0, 0, frameWidth, frameHeight);
+        
+        const imagePromises = imageSources.map(src => {
+          return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+            img.src = src;
+          });
+        });
+        
+        const loadedImages = await Promise.all(imagePromises);
+        
+        let imageIndex = 0;
+        for (let row = 0; row < 3; row++) {
+          for (let col = 0; col < 2; col++) {
+            const x = padding * (col + 1) + photoWidth * col;
+            const y = padding * (row + 1) + photoHeight * row;
+            ctx.drawImage(loadedImages[imageIndex], x, y, photoWidth, photoHeight);
+            ctx.strokeStyle = '#ffb6c1';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(x, y, photoWidth, photoHeight);
+            imageIndex++;
+          }
+        }
+        
+       
+        const heartSize = 60;
+        const heartX = frameWidth - padding - heartSize - 10;
+        const heartY = padding + 10;
+        ctx.fillStyle = '#ff69b4';
+        
+        for (let i = 0; i < 2; i++) {
+          ctx.beginPath();
+          ctx.arc(heartX + heartSize * 0.3 + i * heartSize * 0.4, heartY + heartSize * 0.3, heartSize * 0.3, 0, Math.PI * 2, false);
+          ctx.fill();
+        }
+        
+        ctx.beginPath();
+        ctx.moveTo(heartX + heartSize * 0.5, heartY + heartSize * 0.9);
+        ctx.lineTo(heartX + heartSize * 0.1, heartY + heartSize * 0.4);
+        ctx.lineTo(heartX + heartSize * 0.9, heartY + heartSize * 0.4);
+        ctx.closePath();
+        ctx.fill();
+       
+        
+        const finalDataURL = compositeCanvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = finalDataURL;
+        a.download = 'photobooth_phuongthy.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      
+    });
+  </script>
+</body>
+</html>
