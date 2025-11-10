@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Món quà nhỏ của anh</title>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<title>PhotoBooth</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
 <style>
 body {
   font-family: 'Inter', Arial, sans-serif;
@@ -19,70 +19,27 @@ body {
   justify-content: center
 }
 
-h1, h2 {
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem;
+  color: #d94680;
+  margin-bottom: -5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
   color: #333;
   margin-bottom: 5px;
   font-weight: 700
 }
 
 p.subtitle {
-  font-size: 1em;
-  color: #666;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.3em;
+  color: #ff69b4;
   margin-top: 0;
-  margin-bottom: 20px
-}
-
-#loginContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  width: 100%;
-  max-width: 400px
-}
-
-#loginContainer h2 {
-  margin-top: 0;
-  margin-bottom: 20px
-}
-
-#loginContainer div {
-  margin-bottom: 15px;
-  width: 100%
-}
-
-#loginContainer label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #555
-}
-
-#loginContainer input[type="text"],
-#loginContainer input[type="password"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px
-}
-
-#loginError {
-  color: #dc3545;
-  font-size: 14px;
-  height: 20px;
-  text-align: center
-}
-
-#loginButton {
-  background-color: #ff69b4;
-}
-
-.loginButton:hover {
-  background-color: #e0529d
+  margin-bottom: 20px;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.5);
 }
 
 .hidden {
@@ -90,7 +47,7 @@ p.subtitle {
 }
 
 #photoboothApp {
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%
@@ -112,15 +69,14 @@ video {
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  transform: scaleX(-1);
+  transform: scaleX(-1); /* Chỉ lật video trực tiếp */
   border: 6px solid #ff69b4;
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: filter 0.3s ease; /* Chuyển động filter mượt mà */
+  transition: filter 0.3s ease;
 }
 
-/* Canvas dùng để chụp ảnh, sẽ bị ẩn đi */
 canvas {
   display: none;
 }
@@ -135,19 +91,41 @@ button {
   cursor: pointer;
   font-weight: bold;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, transform 0.2s;
-  font-size: 16px
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  font-size: 16px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 button:hover {
   background-color: #e0529d;
-  transform: translateY(-2px)
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-  transform: none !important
+  transform: none !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#startButton {
+  background: linear-gradient(45deg, #ff69b4, #f72a7b);
+  padding: 12px 25px;
+  font-size: 18px;
+}
+#restartButton {
+  background: linear-gradient(45deg, #ffd700, #f7971e);
+  padding: 12px 25px;
+  font-size: 18px;
+}
+#downloadButton, #confirmEmojiBtn {
+  background: linear-gradient(45deg, #8e2de2, #4a00e0);
+  padding: 12px 25px;
+  font-size: 18px;
+}
+#downloadButton:hover, #confirmEmojiBtn:hover {
+  background: linear-gradient(45deg, #a045ed, #5a10ed);
 }
 
 #controls {
@@ -201,31 +179,6 @@ button:disabled {
   background-color: #f5b0d0
 }
 
-#takePhotoBtn {
-  background-color: #8e2de2
-}
-
-.takePhotoBtn:hover {
-  background-color: #741bb7
-}
-
-#restartButton {
-  background-color: #ffd700;
-  color: #333
-}
-
-.restartButton:hover {
-  background-color: #e6c200
-}
-
-#downloadButton {
-  background-color: #00bfff
-}
-
-.downloadButton:hover {
-  background-color: #0099cc
-}
-
 .photo-actions button {
   background-color: #ff4d4d
 }
@@ -264,7 +217,8 @@ button:disabled {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 10px
+  border-radius: 10px;
+  /* Bỏ transform: scaleX(-1) ở đây */
 }
 
 .photo-actions {
@@ -296,28 +250,45 @@ button:disabled {
   height: 22px;
   font-weight: bold
 }
+
+#emojiContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  width: 100%;
+  max-width: 700px;
+}
+
+#emojiContainer p {
+  margin: 0 0 10px 0;
+  font-weight: 500;
+  color: #555;
+}
+
+#emojiInput {
+  width: 80%;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  border: 2px solid #f8c5e0;
+  border-radius: 8px;
+}
 </style>
 </head>
 
 <body>
-<div id="loginContainer">
-  <h2>🔒 Đăng nhập PhotoBooth đeeeeeeee</h2>
-  <div>
-    <label for="username">Tài khoản:</label>
-    <input type="text" id="username" name="username">
-  </div>
-  <div>
-    <label for="password">Mật khẩu:</label>
-    <input type="password" id="password" name="password">
-  </div>
-  <p id="loginError"></p>
-  <button id="loginButton">Đăng nhập nhóoo</button>
-</div>
-<div id="photoboothApp" class="hidden">
-  <h1>✨ PhotoBooth của Phương Thy ✨</h1>
-  <p class="subtitle">em bé iu của NT :3</p>
+<div id="photoboothApp">
+  <h1>✨ PhotoBooth ✨</h1>
+  <p class="subtitle">iuPT 💖</p>
+  
   <div id="statusContainer">
-    <div class="status-item">Thời gian<span id="timerDisplay">20</span></div>
+    <div class="status-item">Chụp sau...<span id="timerDisplay">12</span></div>
     <div class="status-item">Số ảnh<span id="photoCountDisplay">0 / 10</span></div>
   </div>
   <div class="booth-container">
@@ -329,19 +300,26 @@ button:disabled {
     <button class="filter-btn" data-filter="tokyo">Tokyo</button>
     <button class="filter-btn" data-filter="seoul">Seoul</button>
     <button class="filter-btn" data-filter="paris">Paris</button>
+    <button class="filter-btn" data-filter="vintage-noise">Vintage</button>
   </div>
   <div id="controls">
-    <button id="startButton">▶ Bắt đầu</button>
-    <button id="takePhotoBtn" class="hidden">📸 Chụp Ảnh</button>
-    <button id="restartButton" class="hidden">🔄 Làm lại</button>
+    <button id="startButton">▶ Bắt đầu chụp</button>
+    <button id="restartButton" class="hidden">🔄 Chụp lại</button>
   </div>
   <hr style="width: 80%; border: 1px solid #ddd; margin: 15px 0;">
   <h2>Thư viện ảnh</h2>
-  <p>Sau khi chụp xong, em chọn tối đa 6 ảnh đẹp nhất</p>
+  <p>Em chụp xong rùi, giờ chọn 6 ảnh đẹp nhất nha!</p>
+  
+  <div id="emojiContainer" class="hidden">
+    <p>Chọn tối đa 4 emoji em muốn thêm vào ảnh nè 💖</p>
+    <input type="text" id="emojiInput" placeholder="💖✨😂🥰">
+    <button id="confirmEmojiBtn">Xác nhận Emoji</button>
+  </div>
+
   <div class="counter">Ảnh đã chọn: <span id="selectedCount">0</span> / 6</div>
   <p id="selectionMessage"></p>
   <div class="gallery" id="photoGallery"></div>
-  <button id="downloadButton" disabled>⬇️ Tải 6 ảnh đã chọn về khung</button>
+  <button id="downloadButton" disabled>⬇️ Tải 6 ảnh đã chọn</button>
 </div>
 
 <div id="stickerAssets" style="display: none;">
@@ -366,88 +344,87 @@ button:disabled {
   <svg id="svg-frog" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C9.79086 2 8 3.79086 8 6C8 7.05436 8.35821 8.01972 8.97103 8.78494C6.39162 9.53034 4.5 11.8906 4.5 14.667C4.5 17.5191 6.38885 19.8824 9.02029 20.612C9.52295 22.0945 10.6698 23 12 23C13.3302 23 14.477 22.0945 14.9797 20.612C17.6111 19.8824 19.5 17.5191 19.5 14.667C19.5 11.8906 17.6084 9.53034 15.029 8.78494C15.6418 8.01972 16 7.05436 16 6C16 3.79086 14.2091 2 12 2ZM12 4C13.1046 4 14 4.89543 14 6C14 7.10457 13.1046 8 12 8C10.8954 8 10 7.10457 10 6C10 4.89543 10.8954 4 12 4ZM10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14H14C14.5523 14 15 13.5523 15 13C15 12.4477 14.5523 12 14 12H10Z" fill="#ffb6c1"/>
   </svg>
+  <svg id="svg-chick" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2ZM7.5 7.5C7.5 6.67157 8.17157 6 9 6C9.82843 6 10.5 6.67157 10.5 7.5C10.5 8.32843 9.82843 9 9 9C8.17157 9 7.5 8.32843 7.5 7.5ZM13.5 7.5C13.5 6.67157 14.1716 6 15 6C15.8284 6 16.5 6.67157 16.5 7.5C16.5 8.32843 15.8284 9 15 9C14.1716 9 13.5 8.32843 13.5 7.5ZM12 11.5C10.6193 11.5 9.5 12.6193 9.5 14C9.5 15.3807 10.6193 16.5 12 16.5C13.3807 16.5 14.5 15.3807 14.5 14C14.5 12.6193 13.3807 11.5 12 11.5ZM3 9C3 8.44772 3.44772 8 4 8H6C6.55228 8 7 8.44772 7 9C7 9.55228 6.55228 10 6 10H4C3.44772 10 3 9.55228 3 9ZM18 9C18 8.44772 18.4477 8 19 8H21C21.5523 8 22 8.44772 22 9C22 9.55228 21.5523 10 21 10H19C18.4477 10 18 9.55228 18 9Z" fill="#ffb6c1"/>
+  </svg>
+  <svg id="svg-christmas-tree" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C11.4477 2 11 2.44772 11 3V6H9.5C9.22386 6 9 6.22386 9 6.5C9 6.77614 9.22386 7 9.5 7H11V8H9.5C9.22386 8 9 8.22386 9 8.5C9 8.77614 9.22386 9 9.5 9H11V10H9.5C9.22386 10 9 10.2239 9 10.5C9 10.7761 9.22386 11 9.5 11H11V12H9.5C9.22386 12 9 12.2239 9 12.5C9 12.7761 9.22386 13 9.5 13H11V14H9.5C9.22386 14 9 14.2239 9 14.5C9 14.7761 9.22386 15 9.5 15H11V16H9.5C9.22386 16 9 16.2239 9 16.5C9 16.7761 9.22386 17 9.5 17H11V18H9.5C9.22386 18 9 18.2239 9 18.5C9 18.7761 9.22386 19 9.5 19H11V20H9.5C9.22386 20 9 20.2239 9 20.5C9 20.7761 9.22386 21 9.5 21H11V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V3C13 2.44772 12.5523 2 12 2ZM12 4C12.5523 4 13 4.44772 13 5C13 5.55228 12.5523 6 12 6C11.4477 6 11 5.55228 11 5C11 4.44772 11.4477 4 12 4Z" fill="#228B22"/>
+  </svg>
+  <svg id="svg-duck" width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2ZM7.5 7.5C7.5 6.67157 8.17157 6 9 6C9.82843 6 10.5 6.67157 10.5 7.5C10.5 8.32843 9.82843 9 9 9C8.17157 9 7.5 8.32843 7.5 7.5ZM13.5 7.5C13.5 6.67157 14.1716 6 15 6C15.8284 6 16.5 6.67157 16.5 7.5C16.5 8.32843 15.8284 9 15 9C14.1716 9 13.5 8.32843 13.5 7.5ZM12 11.5C10.6193 11.5 9.5 12.6193 9.5 14C9.5 15.3807 10.6193 16.5 12 16.5C13.3807 16.5 14.5 15.3807 14.5 14C14.5 12.6193 13.3807 11.5 12 11.5ZM3 9C3 8.44772 3.44772 8 4 8H6C6.55228 8 7 8.44772 7 9C7 9.55228 6.55228 10 6 10H4C3.44772 10 3 9.55228 3 9ZM18 9C18 8.44772 18.4477 8 19 8H21C21.5523 8 22 8.44772 22 9C22 9.55228 21.5523 10 21 10H19C18.4477 10 18 9.55228 18 9Z" fill="#ffb6c1"/>
+  </svg>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const TIME_LIMIT = 20;
+  
+  const PHOTO_COUNTDOWN = 12;
   const MAX_PHOTOS = 10;
   const MAX_SELECTIONS = 6;
+  const MAX_EMOJIS = 4;
+  const EMOJI_RANDOM_AREA_PADDING = 100; // Vùng an toàn xung quanh emoji
+
   let timer;
-  let timeLeft = TIME_LIMIT;
+  let photoCountdownValue = PHOTO_COUNTDOWN;
   let photoCount = 0;
   let isSessionActive = false;
-  let currentFilterStyle = 'none'; // Sửa: Dùng trực tiếp style
-  const loginContainer = document.getElementById('loginContainer');
+  let currentFilterStyle = 'none';
+  let userEmojis = '';
+  
   const photoboothApp = document.getElementById('photoboothApp');
-  const loginButton = document.getElementById('loginButton');
-  const usernameInput = document.getElementById('username');
-  const passwordInput = document.getElementById('password');
-  const loginError = document.getElementById('loginError');
   const video = document.getElementById('video');
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
   const photoGallery = document.getElementById('photoGallery');
   const selectedCountSpan = document.getElementById('selectedCount');
   const startButton = document.getElementById('startButton');
-  const takePhotoBtn = document.getElementById('takePhotoBtn');
   const restartButton = document.getElementById('restartButton');
   const downloadButton = document.getElementById('downloadButton');
   const timerDisplay = document.getElementById('timerDisplay');
   const photoCountDisplay = document.getElementById('photoCountDisplay');
   const selectionMessage = document.getElementById('selectionMessage');
   const filterButtons = document.querySelectorAll('#filterControls .filter-btn');
+  const emojiContainer = document.getElementById('emojiContainer');
+  const emojiInput = document.getElementById('emojiInput');
+  const confirmEmojiBtn = document.getElementById('confirmEmojiBtn');
 
-  // Hàm để chuyển SVG thành Image cho Canvas
-  async function svgToImage(svgElement, width, height) {
+  // Hàm chuyển SVG thành Image
+  async function svgToImage(svgElement) {
       return new Promise((resolve, reject) => {
           const svgData = new XMLSerializer().serializeToString(svgElement);
           const img = new Image();
           img.onload = () => resolve(img);
-          img.onerror = (e) => reject(new Error('Lỗi chuyển SVG thành ảnh: ' + e));
+          img.onerror = (e) => reject(new Error('Lỗi SVG: ' + e));
           img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
       });
   }
 
-  // Tải tất cả các sticker SVG thành Image một lần
+  // Tải sticker SVG (thêm sticker mới)
   const stickerImages = {};
   async function loadSvgStickers() {
-      const stickerIds = ['svg-bear', 'svg-cat', 'svg-cloud', 'svg-lollipop', 'svg-cupcake', 'svg-gift', 'svg-frog'];
+      const stickerIds = ['svg-bear', 'svg-cat', 'svg-cloud', 'svg-lollipop', 'svg-cupcake', 'svg-gift', 'svg-frog', 'svg-chick', 'svg-christmas-tree', 'svg-duck'];
       for (const id of stickerIds) {
           const svgElement = document.getElementById(id);
           if (svgElement) {
               try {
-                  // Giả định kích thước mặc định cho SVG nếu không được truyền vào
-                  const img = await svgToImage(svgElement, 100, 100); 
+                  const img = await svgToImage(svgElement);
                   stickerImages[id] = img;
               } catch (e) {
                   console.error(`Không thể tải sticker ${id}:`, e);
               }
           }
       }
+      console.log('Stickers SVG đã được tải!');
   }
   
-  // Gọi hàm này khi khởi tạo ứng dụng
   loadSvgStickers();
 
-  loginButton.addEventListener('click', function() {
-    const username = usernameInput.value;
-    const password = passwordInput.value;
-    if (username === 'Nguyentranphuongthy' && password === '07022007') {
-      loginContainer.classList.add('hidden');
-      photoboothApp.style.display = 'flex';
-      photoboothApp.classList.remove('hidden');
-      
-      startCamera();
-      resetUI();
-      
-    } else {
-      loginError.textContent = 'Sai tên đăng nhập hoặc mật khẩu rùi nhaaa :33';
-    }
-  });
-  
+  // Bắt đầu camera và reset UI ngay khi vào
+  startCamera();
+  resetUI();
+
+  // Gán sự kiện cho các nút
   startButton.addEventListener('click', startSession);
-  takePhotoBtn.addEventListener('click', takePhoto);
   restartButton.addEventListener('click', restartSession);
   downloadButton.addEventListener('click', downloadSelectedPhotos);
   
@@ -456,6 +433,20 @@ document.addEventListener('DOMContentLoaded', function() {
       const filter = button.dataset.filter;
       applyFilter(filter);
     });
+  });
+
+  emojiInput.addEventListener('input', function(e) {
+      const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B50}]+/ug;
+      const emojis = (e.target.value.match(emojiRegex) || []).join('');
+      const limitedEmojis = Array.from(emojis).slice(0, MAX_EMOJIS).join('');
+      e.target.value = limitedEmojis;
+  });
+
+  confirmEmojiBtn.addEventListener('click', function() {
+      userEmojis = emojiInput.value;
+      emojiContainer.classList.add('hidden');
+      downloadButton.disabled = false;
+      alert('Đã lưu emoji! Giờ em tải ảnh về nha 💖');
   });
   
   function startCamera() {
@@ -481,18 +472,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // === HÀM FILTER MỚI (DÙNG STYLE TRỰC TIẾP) ===
   function applyFilter(filter) {
     let filterValue = 'none';
     switch (filter) {
       case 'tokyo':
-        filterValue = 'contrast(1.1) brightness(1.1) saturate(0)'; // Tông màu lạnh, ít màu
+        filterValue = 'contrast(1.1) brightness(1.1) saturate(0)';
         break;
       case 'seoul':
-        filterValue = 'saturate(1.3) contrast(1.1) sepia(0.2)'; // Tông màu ấm, tươi sáng
+        filterValue = 'saturate(1.3) contrast(1.1) sepia(0.2)';
         break;
       case 'paris':
-        filterValue = 'contrast(0.9) brightness(1.2) saturate(0.8) hue-rotate(-10deg)'; // Tông màu trầm, cổ điển
+        filterValue = 'contrast(0.9) brightness(1.2) saturate(0.8) hue-rotate(-10deg)';
+        break;
+      case 'vintage-noise':
+        filterValue = 'sepia(0.5) contrast(1.2) brightness(0.9) saturate(0.8)';
         break;
       case 'none':
       default:
@@ -504,54 +497,84 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function resetUI() {
     clearInterval(timer);
-    photoGallery.innerHTML = '';
-    timeLeft = TIME_LIMIT;
-    photoCount = 0;
     isSessionActive = false;
-    timerDisplay.textContent = timeLeft;
+    
+    photoGallery.innerHTML = '';
+    photoCountdownValue = PHOTO_COUNTDOWN;
+    photoCount = 0;
+    userEmojis = '';
+    
+    timerDisplay.textContent = photoCountdownValue;
     photoCountDisplay.textContent = `0 / ${MAX_PHOTOS}`;
     selectedCountSpan.textContent = '0';
     selectionMessage.textContent = '';
     
-    // Reset filter
     video.style.filter = 'none';
     currentFilterStyle = 'none';
     
     startButton.classList.remove('hidden');
-    takePhotoBtn.classList.add('hidden');
     restartButton.classList.add('hidden');
     downloadButton.disabled = true;
+    emojiContainer.classList.add('hidden');
+    emojiInput.value = '';
     disableCheckboxes(true);
   }
   
   function startSession() {
     isSessionActive = true;
     startButton.classList.add('hidden');
-    takePhotoBtn.classList.remove('hidden');
     restartButton.classList.remove('hidden');
-    timer = setInterval(updateTimer, 1000);
+    startPhotoCountdown();
   }
-  
-  function updateTimer() {
-    timeLeft--;
-    timerDisplay.textContent = timeLeft;
-    if (timeLeft <= 0) {
-      endSession();
+
+  function startPhotoCountdown() {
+    if (!isSessionActive) return;
+
+    photoCountdownValue = PHOTO_COUNTDOWN;
+    timerDisplay.textContent = photoCountdownValue;
+    
+    clearInterval(timer);
+    timer = setInterval(updatePhotoCountdown, 1000);
+  }
+
+  function updatePhotoCountdown() {
+    if (!isSessionActive) {
+      clearInterval(timer);
+      return;
+    }
+    
+    photoCountdownValue--;
+    timerDisplay.textContent = photoCountdownValue;
+    
+    if (photoCountdownValue <= 0) {
+      clearInterval(timer);
+      takePhoto();
+      
+      if (photoCount < MAX_PHOTOS) {
+        startPhotoCountdown();
+      } else {
+        endSession();
+      }
     }
   }
-  
+
   function endSession() {
-    clearInterval(timer);
     isSessionActive = false;
-    timerDisplay.textContent = "Hết giờ :)))";
-    takePhotoBtn.classList.add('hidden');
+    clearInterval(timer);
+    
+    timerDisplay.textContent = "Xong!";
+    restartButton.classList.add('hidden');
+    
     disableCheckboxes(false);
-    downloadButton.disabled = false;
-    alert(`Đã hết! Em đã chụp ${photoCount} ảnh. Giờ hãy chọn tối đa ${MAX_SELECTIONS} ảnh đẹp nhất.`);
+    
+    emojiContainer.classList.remove('hidden');
+    alert(`Đã chụp xong ${MAX_PHOTOS} ảnh! Giờ em chọn 6 tấm đẹp nhất và nhập emoji nà ✨`);
   }
   
   function restartSession() {
-    if (confirm('Em có chắc muốn làm lại hongg. Toàn bộ ảnh đã chụp sẽ bị xóa á :))).')) {
+    if (confirm('Em có chắc muốn làm lại hongg? Ảnh sẽ bị xoá hết đó nha 🥺')) {
+      isSessionActive = false; 
+      clearInterval(timer);
       resetUI();
     }
   }
@@ -563,15 +586,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  
+  function addCanvasNoise(ctx, width, height) {
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+          const noise = (Math.random() - 0.5) * 50;
+          data[i] = Math.max(0, Math.min(255, data[i] + noise));
+          data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
+          data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
+      }
+      ctx.putImageData(imageData, 0, 0);
+  }
+
   function takePhoto() {
-    if (!isSessionActive || photoCount >= MAX_PHOTOS) {
-      return;
-    }
     photoCount++;
     photoCountDisplay.textContent = `${photoCount} / ${MAX_PHOTOS}`;
     
-    // Logic chụp ảnh 16:9 (crop)
     const vWidth = video.videoWidth;
     const vHeight = video.videoHeight;
     const vRatio = vWidth / vHeight;
@@ -584,42 +614,45 @@ document.addEventListener('DOMContentLoaded', function() {
     canvas.height = targetHeight;
     
     let sWidth, sHeight, sX, sY;
-
     if (vRatio > targetRatio) {
         sHeight = vHeight;
         sWidth = vHeight * targetRatio;
-        sX = (vWidth - sWidth) / 2; // Cắt 2 bên
+        sX = (vWidth - sWidth) / 2;
         sY = 0;
     } else {
         sWidth = vWidth;
         sHeight = vWidth / targetRatio;
         sX = 0;
-        sY = (vHeight - sHeight) / 2; // Cắt trên dưới
+        sY = (vHeight - sHeight) / 2;
     }
     
-    // Áp dụng filter (từ style) vào canvas
     context.filter = currentFilterStyle;
     
+    // Đảm bảo ảnh xuất ra không bị lật
+    context.save();
+    context.scale(-1, 1); // Lật ảnh để đúng chiều như camera
     context.drawImage(
         video,
         sX, sY, sWidth, sHeight,
-        0, 0, targetWidth, targetHeight
+        -targetWidth, 0, targetWidth, targetHeight
     );
-    context.filter = 'none'; // Reset filter cho canvas sau khi vẽ
+    context.restore();
+    
+    if (currentFilterStyle.includes('sepia')) {
+        addCanvasNoise(context, targetWidth, targetHeight);
+    }
+    
+    context.filter = 'none';
     
     const dataURL = canvas.toDataURL('image/png');
     addPhotoToGallery(dataURL);
-    
-    if (photoCount >= MAX_PHOTOS) {
-      endSession();
-    }
   }
   
   function addPhotoToGallery(dataURL) {
     const photoItem = document.createElement('div');
     photoItem.className = 'photo-item';
-    // Ảnh preview trong gallery lật lại để khớp với video
-    photoItem.innerHTML = `<img src="${dataURL}" style="transform: scaleX(-1);">`;
+    // Bỏ transform: scaleX(-1) ở đây
+    photoItem.innerHTML = `<img src="${dataURL}">`; 
     
     const actions = document.createElement('div');
     actions.className = 'photo-actions';
@@ -655,20 +688,17 @@ document.addEventListener('DOMContentLoaded', function() {
   function downloadSelectedPhotos() {
     const checkedBoxes = document.querySelectorAll('.photo-item input[type="checkbox"]:checked');
     if (checkedBoxes.length !== MAX_SELECTIONS) {
-      alert(`Em cần phải chọn ĐÚNG ${MAX_SELECTIONS} ảnh để ghép khung nhaaa`);
+      alert(`Em ơi, em cần chọn ĐÚNG ${MAX_SELECTIONS} ảnh để ghép khung nha 🥰`);
       return;
     }
     const imageSources = [];
     checkedBoxes.forEach(cb => {
-      // Lấy ảnh gốc (không lật)
       const img = cb.closest('.photo-item').querySelector('img');
       imageSources.push(img.src);
     });
-    // Gọi hàm VẼ KHUNG MỚI
     composeAndDownload(imageSources);
   }
   
-  // === HÀM VẼ KHUNG ẢNH MỚI (THEO MẪU + STICKER SVG) ===
   async function composeAndDownload(imageSources) {
     
     const finalCanvas = document.createElement('canvas');
@@ -680,14 +710,14 @@ document.addEventListener('DOMContentLoaded', function() {
     finalCanvas.width = finalWidth;
     finalCanvas.height = finalHeight;
     
-    // 1. Vẽ nền gradient (hồng -> tím nhạt)
+    // 1. Vẽ nền
     const gradient = ctx.createLinearGradient(0, 0, 0, finalHeight);
-    gradient.addColorStop(0, '#fde4ea'); // Hồng nhạt
-    gradient.addColorStop(1, '#d8d8f8'); // Tím nhạt
+    gradient.addColorStop(0, '#fde4ea');
+    gradient.addColorStop(1, '#d8d8f8');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, finalWidth, finalHeight);
     
-    // 2. Tải 6 tấm ảnh đã chọn
+    // 2. Tải 6 tấm ảnh
     const imagePromises = imageSources.map(src => {
       return new Promise((resolve, reject) => {
         const img = new Image();
@@ -702,31 +732,28 @@ document.addEventListener('DOMContentLoaded', function() {
         loadedImages = await Promise.all(imagePromises);
     } catch (e) {
         console.error(e);
-        alert('Lỗi khi tải ảnh đã chụp, không thể tạo khung.');
+        alert('Lỗi khi tải ảnh, không thể tạo khung.');
         return;
     }
 
-    // 3. Tính toán bố cục 3 CỘT, 2 HÀNG (3x2)
+    // 3. Bố cục 3 CỘT, 2 HÀNG (3x2)
     const gridCols = 3;
     const gridRows = 2;
-    const gridPadding = 25; // Khoảng cách giữa các ảnh và viền khung
+    const gridPadding = 25;
     
-    // Kích thước khung trắng bên trong
     const innerFrameWidth = 1600;
     const innerFrameHeight = 825;
-    const innerFrameX = (finalWidth - innerFrameWidth) / 2; // (1920 - 1600) / 2 = 160
-    const innerFrameY = (finalHeight - innerFrameHeight) / 2; // (1080 - 825) / 2 = 127.5
+    const innerFrameX = (finalWidth - innerFrameWidth) / 2;
+    const innerFrameY = (finalHeight - innerFrameHeight) / 2;
     
-    // Kích thước mỗi ảnh (tỉ lệ 4:3)
-    const photoWidth = (innerFrameWidth - (gridPadding * (gridCols + 1))) / gridCols; // (1600 - (25*4)) / 3 = 500
-    const photoHeight = (innerFrameHeight - (gridPadding * (gridRows + 1))) / gridRows; // (825 - (25*3)) / 2 = 375
+    const photoWidth = (innerFrameWidth - (gridPadding * (gridCols + 1))) / gridCols;
+    const photoHeight = (innerFrameHeight - (gridPadding * (gridRows + 1))) / gridRows;
                                                              
-    // Vẽ khung trắng bên dưới
+    // Vẽ khung trắng
     ctx.fillStyle = 'white';
     ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
     ctx.shadowBlur = 15;
     
-    // Hỗ trợ roundRect hoặc fallback về rect
     if (ctx.roundRect) {
       ctx.beginPath();
       ctx.roundRect(innerFrameX, innerFrameY, innerFrameWidth, innerFrameHeight, 20);
@@ -736,7 +763,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     ctx.shadowColor = 'transparent';
 
-    // 4. Vẽ 6 tấm ảnh
+    // 4. Vẽ 6 tấm ảnh (và lưu lại vị trí)
+    const forbiddenRects = [];
     let imageIndex = 0;
     for (let row = 0; row < gridRows; row++) {
       for (let col = 0; col < gridCols; col++) {
@@ -745,23 +773,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const x = innerFrameX + (gridPadding * (col + 1)) + (photoWidth * col);
         const y = innerFrameY + (gridPadding * (row + 1)) + (photoHeight * row);
         
+        forbiddenRects.push({ x: x, y: y, w: photoWidth, h: photoHeight });
+        
         const img = loadedImages[imageIndex];
-        const imgRatio = img.width / img.height; // 1.777 (16:9)
-        const frameRatio = photoWidth / photoHeight; // 1.333 (4:3)
+        const frameRatio = photoWidth / photoHeight;
         
         let sWidth, sHeight, sX, sY;
         
-        // Cắt ảnh 16:9 cho vừa khung 4:3
         sHeight = img.height;
         sWidth = img.height * frameRatio;
-        sX = (img.width - sWidth) / 2; // Cắt 2 bên để giữ phần trung tâm
+        sX = (img.width - sWidth) / 2;
         sY = 0;
         
-        ctx.save(); // Lưu trạng thái canvas
+        ctx.save();
         ctx.beginPath();
         if (ctx.roundRect) {
-            ctx.roundRect(x, y, photoWidth, photoHeight, 15); // Bo góc cho ảnh nhỏ
-            ctx.clip(); // Cắt ảnh theo đường path này
+            ctx.roundRect(x, y, photoWidth, photoHeight, 15);
+            ctx.clip();
         } else {
             ctx.rect(x, y, photoWidth, photoHeight);
             ctx.clip();
@@ -772,9 +800,8 @@ document.addEventListener('DOMContentLoaded', function() {
             sX, sY, sWidth, sHeight,
             x, y, photoWidth, photoHeight
         );
-        ctx.restore(); // Khôi phục trạng thái canvas
+        ctx.restore();
         
-        // Vẽ viền
         ctx.strokeStyle = '#ffb6c1';
         ctx.lineWidth = 4;
         if (ctx.roundRect) {
@@ -789,30 +816,41 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // 5. Vẽ Stickers (Lấy từ đối tượng stickerImages đã được tải sẵn)
-    try {
-      ctx.globalAlpha = 0.9; // Độ trong suốt nhẹ cho sticker
-      if (stickerImages['svg-cloud']) ctx.drawImage(stickerImages['svg-cloud'], 40, 40, 150, 100);
-      if (stickerImages['svg-cupcake']) ctx.drawImage(stickerImages['svg-cupcake'], 200, 110, 80, 80);
-      if (stickerImages['svg-frog']) ctx.drawImage(stickerImages['svg-frog'], 1730, 40, 130, 110);
-      if (stickerImages['svg-cat']) ctx.drawImage(stickerImages['svg-cat'], 1710, 880, 150, 150);
-      if (stickerImages['svg-lollipop']) ctx.drawImage(stickerImages['svg-lollipop'], 1630, 890, 120, 120);
-      if (stickerImages['svg-bear']) ctx.drawImage(stickerImages['svg-bear'], 40, 880, 150, 150);
-      if (stickerImages['svg-gift']) ctx.drawImage(stickerImages['svg-gift'], 180, 920, 100, 100);
-      ctx.globalAlpha = 1.0;
-
-      // Chữ "MÓN QUÀ NHỎ CỦA ANH"
-      ctx.font = '70px Pacifico'; // Sử dụng font Pacifico
-      ctx.fillStyle = '#ff69b4';
-      ctx.textAlign = 'center';
-      ctx.fillText('LOVE U 4EVER <3', finalWidth / 2, 80);
-      ctx.textAlign = 'left'; // Reset về mặc định
-
-    } catch (e) {
-      console.error("Lỗi khi vẽ sticker hoặc chữ:", e);
-    }
+    // 5. Vẽ Stickers và trái tim
+    ctx.globalAlpha = 0.9;
     
-    // 6. Vẽ trái tim (giữ nguyên, hoạt động tốt)
+    // Vùng an toàn cho chữ và sticker góc
+    ctx.font = '80px "Dancing Script", cursive';
+    ctx.fillStyle = '#ff69b4';
+    ctx.textAlign = 'center';
+    ctx.fillText('LOVE U 4EVER <3', finalWidth / 2, 90);
+    ctx.textAlign = 'left';
+    const headerRect = { x: finalWidth/2 - 350, y: 0, w: 700, h: 120 };
+    forbiddenRects.push(headerRect); // Thêm vùng chữ vào vùng cấm
+
+    // Các sticker cố định ở góc (có thêm sticker mới)
+    const staticStickers = [
+        { id: 'svg-cloud', x: 40, y: 40, w: 150, h: 100 },
+        { id: 'svg-cupcake', x: 200, y: 110, w: 80, h: 80 },
+        { id: 'svg-frog', x: 1730, y: 40, w: 130, h: 110 },
+        { id: 'svg-cat', x: 1710, y: 880, w: 150, h: 150 },
+        { id: 'svg-lollipop', x: 1630, y: 890, w: 120, h: 120 },
+        { id: 'svg-bear', x: 40, y: 880, w: 150, h: 150 },
+        { id: 'svg-gift', x: 180, y: 920, w: 100, h: 100 },
+        { id: 'svg-chick', x: 40, y: finalHeight / 2 - 50, w: 100, h: 100 }, // Vị trí mới
+        { id: 'svg-christmas-tree', x: finalWidth - 140, y: finalHeight / 2 - 50, w: 100, h: 100 }, // Vị trí mới
+        { id: 'svg-duck', x: finalWidth / 2 - 50, y: finalHeight - 120, w: 100, h: 100 } // Vị trí mới
+    ];
+
+    for(const s of staticStickers) {
+        if (stickerImages[s.id]) {
+            ctx.drawImage(stickerImages[s.id], s.x, s.y, s.w, s.h);
+            forbiddenRects.push({ x: s.x, y: s.y, w: s.w, h: s.h }); // Thêm vào vùng cấm
+        }
+    }
+    ctx.globalAlpha = 1.0;
+
+    // 6. Vẽ trái tim (vẫn giữ)
     function drawHeart(x, y, size, color) {
         ctx.fillStyle = color;
         ctx.beginPath();
@@ -824,6 +862,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.quadraticCurveTo(x + size, y + size / 2, x + size / 2, y + size * 3/4);
         ctx.quadraticCurveTo(x, y + size / 2, x, y + size / 4);
         ctx.fill();
+        forbiddenRects.push({x: x, y: y, w: size, h: size * 3/4}); // Thêm vùng trái tim vào vùng cấm
     }
     
     drawHeart(300, 50, 40, '#FF69B4');
@@ -834,7 +873,49 @@ document.addEventListener('DOMContentLoaded', function() {
     drawHeart(1600, 850, 30, '#FFB6C1');
     drawHeart(1850, 700, 40, '#FF69B4');
     
-    // 7. Tải ảnh về
+    // 7. Vẽ EMOJI (to hơn + tránh chồng chéo)
+    if (userEmojis && userEmojis.length > 0) {
+        const emojiSize = 128;
+        ctx.font = `${emojiSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        const emojis = Array.from(userEmojis).slice(0, MAX_EMOJIS);
+        
+        for (const emoji of emojis) {
+            let x, y, isOverlapping;
+            let attempts = 0;
+            const maxAttempts = 200; // Tăng số lần thử
+            
+            do {
+                isOverlapping = false;
+                // Tạo vị trí ngẫu nhiên trong khoảng an toàn
+                x = Math.random() * (finalWidth - emojiSize * 2 - EMOJI_RANDOM_AREA_PADDING * 2) + emojiSize + EMOJI_RANDOM_AREA_PADDING;
+                y = Math.random() * (finalHeight - emojiSize * 2 - EMOJI_RANDOM_AREA_PADDING * 2) + emojiSize + EMOJI_RANDOM_AREA_PADDING;
+                
+                // Kiểm tra xem có đè lên vùng cấm (ảnh + chữ + sticker + emoji khác)
+                for (const rect of forbiddenRects) {
+                    const padding = emojiSize / 2;
+                    if (x + emojiSize/2 > rect.x - padding && x - emojiSize/2 < rect.x + rect.w + padding &&
+                        y + emojiSize/2 > rect.y - padding && y - emojiSize/2 < rect.y + rect.h + padding) {
+                        isOverlapping = true;
+                        break;
+                    }
+                }
+                attempts++;
+            } while (isOverlapping && attempts < maxAttempts);
+
+            if (!isOverlapping) {
+                ctx.fillText(emoji, x, y);
+                // Thêm vị trí mới của emoji vào vùng cấm để các emoji sau không đè lên
+                forbiddenRects.push({ x: x - emojiSize/2, y: y - emojiSize/2, w: emojiSize, h: emojiSize });
+            } else {
+                console.warn(`Không tìm được vị trí phù hợp cho emoji "${emoji}" sau ${maxAttempts} lần thử.`);
+            }
+        }
+    }
+    
+    // 8. Tải ảnh về
     const finalDataURL = finalCanvas.toDataURL('image/png');
     const a = document.createElement('a');
     a.href = finalDataURL;
